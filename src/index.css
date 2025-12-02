@@ -44,13 +44,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-
-  /* Paleta */
-  --palette-1: #94e8b4;
-  --palette-2: #72bda3;
-  --palette-3: #5e8c61;
-  --palette-4: #4e6151;
-  --palette-5: #3b322c;
 }
 
 @theme inline {
@@ -89,6 +82,26 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-mint-300: #94e8b4;
+  --color-sage-500: #72bda3;
+  --color-herb-300: #b0c5af;
+  --color-forest-600: #5e8c61;
+  --color-cedar-700: #4e6151;
+  --color-soil-800: #3b322c;
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(45px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  --animate-fadeup: "fadeUp 0.7s ease-out";
 }
 
 .dark {
@@ -129,73 +142,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
-}
 
-/* Utilitários simples usando a paleta personalizada */
-.bg-palette-1 {
-  background-color: var(--palette-1);
-}
-.bg-palette-2 {
-  background-color: var(--palette-2);
-}
-.bg-palette-3 {
-  background-color: var(--palette-3);
-}
-.bg-palette-4 {
-  background-color: var(--palette-4);
-}
-.bg-palette-5 {
-  background-color: var(--palette-5);
-}
-
-.text-palette-1 {
-  color: var(--palette-1);
-}
-.text-palette-2 {
-  color: var(--palette-2);
-}
-.text-palette-3 {
-  color: var(--palette-3);
-}
-.text-palette-4 {
-  color: var(--palette-4);
-}
-.text-palette-5 {
-  color: var(--palette-5);
-}
-
-.border-palette-1 {
-  border-color: var(--palette-1);
-}
-.border-palette-2 {
-  border-color: var(--palette-2);
-}
-.border-palette-3 {
-  border-color: var(--palette-3);
-}
-.border-palette-4 {
-  border-color: var(--palette-4);
-}
-.border-palette-5 {
-  border-color: var(--palette-5);
-}
-
-/* Classes com !important para sobrescrever utilitários quando necessário */
-.bg-palette-1\! {
-  background-color: var(--palette-1) !important;
-}
-.bg-palette-2\! {
-  background-color: var(--palette-2) !important;
-}
-.bg-palette-3\! {
-  background-color: var(--palette-3) !important;
-}
-.bg-palette-4\! {
-  background-color: var(--palette-4) !important;
-}
-.bg-palette-5\! {
-  background-color: var(--palette-5) !important;
+  button {
+    cursor: pointer;
+  }
 }
