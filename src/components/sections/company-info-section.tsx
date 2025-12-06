@@ -56,7 +56,7 @@ export function CompanyInfoSection({
   return (
     <section className="space-y-6">
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <Briefcase className="inline mr-2 size-4 " /> Dados da Empresa
         </FieldLegend>
         <FieldGroup className="gap-3">

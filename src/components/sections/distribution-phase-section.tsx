@@ -74,13 +74,13 @@ export function DistributionPhaseSection({
 
   return (
     <section className="space-y-6">
-      <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-forest-600">
+      <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-soil-800">
         <FaTruckMoving className="inline mr-2 size-8" /> Fase de Distribuição
         <span className="ml-2 text-sm">(Transporte ao mercado consumidor)</span>
       </h1>
 
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <IoHome className="inline mr-2 size-5" /> Mercado doméstico
         </FieldLegend>
         <FieldGroup className="flex gap-3">
@@ -338,7 +338,7 @@ export function DistributionPhaseSection({
 
       {/* Exportação - via container marítimo */}
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <FaShip className="inline mr-2 size-5" /> Exportação - via container
           marítimo
         </FieldLegend>

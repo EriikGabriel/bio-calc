@@ -84,7 +84,7 @@ export function IndustrialPhaseSection({
 
   return (
     <section className="space-y-6">
-      <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-forest-600">
+      <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-soil-800">
         <MdFactory className="inline mr-2 size-8" /> Fase Industrial -
         Processamento
         <span className="ml-2 text-sm">
@@ -93,7 +93,7 @@ export function IndustrialPhaseSection({
       </h1>
 
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           Dados do sistema
         </FieldLegend>
         <FieldGroup className="flex gap-3">
@@ -196,7 +196,7 @@ export function IndustrialPhaseSection({
 
       {/* Energia - Eletricidade */}
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <MdEnergySavingsLeaf className="inline mr-2 size-5" /> Energia -
           Eletricidade
         </FieldLegend>
@@ -421,7 +421,7 @@ export function IndustrialPhaseSection({
 
       {/* Energia - Combustível */}
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <BsFillFuelPumpFill className="inline mr-2 size-5" /> Energia -
           Combustível
         </FieldLegend>
@@ -729,7 +729,7 @@ export function IndustrialPhaseSection({
 
       {/* Co-geração (Aproveitamento energético) */}
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <MdLocalFireDepartment className="inline mr-2 size-5" /> Co-geração
           (Aproveitamento energético)
         </FieldLegend>
@@ -833,7 +833,7 @@ export function IndustrialPhaseSection({
 
       {/* Insumos de manufatura */}
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <MdHandyman className="inline mr-2 size-5" /> Insumos de manufatura
         </FieldLegend>
         <FieldGroup className="flex gap-3">

@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export function Home() {
   return (
-    <main className="bg-herb-300 text-white min-h-dvh w-full pb-28 flex flex-col items-center gap-10">
+    <main className="bg-herb-300 text-white min-h-dvh w-full pb-12 flex flex-col items-center gap-10">
       <Header />
 
       <Tabs defaultValue="calculator" className="w-[80%]">

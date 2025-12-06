@@ -72,11 +72,11 @@ export function AgriculturalPhaseSection({
 
   return (
     <section className="space-y-6">
-      <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-forest-600">
+      <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-soil-800">
         <MdAgriculture className="inline mr-2 size-8" /> Fase Agricola
       </h1>
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <GiCorn className="inline mr-2 size-5" /> Produção de Biomassa
         </FieldLegend>
         <FieldGroup className="flex gap-3">
@@ -308,7 +308,7 @@ export function AgriculturalPhaseSection({
 
       {/* Mudança de Uso da Terra (MUT) */}
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <PiFarmFill className="inline mr-2 size-5" />
           Mudança de Uso da Terra
         </FieldLegend>
@@ -494,7 +494,7 @@ export function AgriculturalPhaseSection({
 
       {/* Transporte da biomassa até a planta industrial */}
       <FieldSet>
-        <FieldLegend className="flex items-center text-forest-600">
+        <FieldLegend className="flex items-center text-soil-800">
           <GiFarmTractor className="inline mr-2 size-5" /> Transporte da
           biomassa até a planta industrial
         </FieldLegend>

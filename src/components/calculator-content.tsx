@@ -1,3 +1,4 @@
+import { FormWizard } from "@/components/form-wizard"
 import type { FieldErrors } from "@/types/forms"
 import { validateDistributionPhase } from "@/utils/validations/distribution-phase-validation"
 import { validateIndustrialPhase } from "@/utils/validations/industrial-phase-validation"
@@ -7,7 +8,6 @@ import {
   DISTRIBUTION_PHASE_INITIAL,
   INDUSTRIAL_PHASE_INITIAL,
 } from "@constants/initial-states"
-import { Button } from "@ui/button"
 import { TabsContent } from "@ui/tabs"
 import { validateAgriculturalPhase } from "@utils/validations/agricultural-phase-validation"
 import { validateCompanyInfo } from "@utils/validations/company-info-validation"
@@ -50,8 +50,7 @@ export function CalculatorContent() {
   )
   const [distributionErrors, setDistributionErrors] = useState<FieldErrors>({})
 
-  function handleSubmitAll(e: React.FormEvent) {
-    e.preventDefault()
+  function validateAll() {
     const v1 = validateCompanyInfo(companyInfo)
     const v2 = validateAgriculturalPhase(agriculturalData)
     const v3 = validateIndustrialPhase(industrialData)
@@ -60,6 +59,11 @@ export function CalculatorContent() {
     setAgriculturalErrors(v2)
     setIndustrialErrors(v3)
     setDistributionErrors(v4)
+    return [v1, v2, v3, v4]
+  }
+
+  async function handleFinish() {
+    const [v1, v2, v3, v4] = validateAll()
     if (
       Object.keys(v1).length === 0 &&
       Object.keys(v2).length === 0 &&
@@ -78,7 +82,7 @@ export function CalculatorContent() {
   return (
     <TabsContent
       value="calculator"
-      className="border-cedar-700 bg-green-50 border rounded-2xl min-h-80 text-soil-800 p-5"
+      className="border-cedar-700 bg-green-50/60 border rounded-2xl min-h-80 text-soil-800 p-5"
     >
       <div>
         <div className="flex gap-2 text-forest-600 items-center">
@@ -88,64 +92,114 @@ export function CalculatorContent() {
               Calculadora para contabilização de Eficiência Energético-Ambiental
               para biocombustíveis sólidos (Pellets ou Briquetes)
             </h1>
-            <p className="text-neutral-600 font-light text-sm">
+            <p className="text-cedar-700 text-sm">
               Estima a eficiência energético-ambiental de pellets e briquetes
               considerando poder calorífico, umidade, densidade, energia usada,
               emissões no transporte e origem da biomassa.
             </p>
           </div>
         </div>
-        <form onSubmit={handleSubmitAll} className="mt-4 space-y-10" noValidate>
-          <CompanyInfoSection
-            data={companyInfo}
-            errors={companyErrors}
-            onFieldChange={(name, value) => {
-              setCompanyInfo((d) => ({ ...d, [name]: value }))
-            }}
-            onFieldBlur={() => {
-              setCompanyErrors(validateCompanyInfo(companyInfo))
-            }}
+        <div className="mt-4">
+          <FormWizard
+            onFinish={handleFinish}
+            steps={[
+              {
+                id: "company",
+                label: "Empresa",
+                description: "Informações gerais",
+                content: (
+                  <CompanyInfoSection
+                    data={companyInfo}
+                    errors={companyErrors}
+                    onFieldChange={(name, value) => {
+                      setCompanyInfo((d) => ({ ...d, [name]: value }))
+                    }}
+                    onFieldBlur={() => {
+                      setCompanyErrors(validateCompanyInfo(companyInfo))
+                    }}
+                  />
+                ),
+                onValidate: () => {
+                  const v = validateCompanyInfo(companyInfo)
+                  setCompanyErrors(v)
+                  return Object.keys(v).length === 0
+                },
+              },
+              {
+                id: "agricultural",
+                label: "Fase Agrícola",
+                description: "Origem e preparo da biomassa",
+                content: (
+                  <AgriculturalPhaseSection
+                    data={agriculturalData}
+                    errors={agriculturalErrors}
+                    onFieldChange={(name, value) => {
+                      setAgriculturalData((d) => ({ ...d, [name]: value }))
+                    }}
+                    onFieldBlur={() => {
+                      setAgriculturalErrors(
+                        validateAgriculturalPhase(agriculturalData)
+                      )
+                    }}
+                  />
+                ),
+                onValidate: () => {
+                  const v = validateAgriculturalPhase(agriculturalData)
+                  setAgriculturalErrors(v)
+                  return Object.keys(v).length === 0
+                },
+              },
+              {
+                id: "industrial",
+                label: "Fase Industrial",
+                description: "Produção e energia",
+                content: (
+                  <IndustrialPhaseSection
+                    data={industrialData}
+                    errors={industrialErrors}
+                    onFieldChange={(name, value) => {
+                      setIndustrialData((d) => ({ ...d, [name]: value }))
+                    }}
+                    onFieldBlur={() => {
+                      setIndustrialErrors(
+                        validateIndustrialPhase(industrialData)
+                      )
+                    }}
+                  />
+                ),
+                onValidate: () => {
+                  const v = validateIndustrialPhase(industrialData)
+                  setIndustrialErrors(v)
+                  return Object.keys(v).length === 0
+                },
+              },
+              {
+                id: "distribution",
+                label: "Distribuição",
+                description: "Transporte e entrega",
+                content: (
+                  <DistributionPhaseSection
+                    data={distributionData}
+                    errors={distributionErrors}
+                    onFieldChange={(name, value) => {
+                      setDistributionData((d) => ({ ...d, [name]: value }))
+                    }}
+                    onFieldBlur={() => {
+                      setDistributionErrors(
+                        validateDistributionPhase(distributionData)
+                      )
+                    }}
+                  />
+                ),
+                onValidate: () => {
+                  const v = validateDistributionPhase(distributionData)
+                  setDistributionErrors(v)
+                  return Object.keys(v).length === 0
+                },
+              },
+            ]}
           />
-
-          <AgriculturalPhaseSection
-            data={agriculturalData}
-            errors={agriculturalErrors}
-            onFieldChange={(name, value) => {
-              setAgriculturalData((d) => ({ ...d, [name]: value }))
-            }}
-            onFieldBlur={() => {
-              setAgriculturalErrors(validateAgriculturalPhase(agriculturalData))
-            }}
-          />
-
-          <IndustrialPhaseSection
-            data={industrialData}
-            errors={industrialErrors}
-            onFieldChange={(name, value) => {
-              setIndustrialData((d) => ({ ...d, [name]: value }))
-            }}
-            onFieldBlur={() => {
-              setIndustrialErrors(validateIndustrialPhase(industrialData))
-            }}
-          />
-
-          <DistributionPhaseSection
-            data={distributionData}
-            errors={distributionErrors}
-            onFieldChange={(name, value) => {
-              setDistributionData((d) => ({ ...d, [name]: value }))
-            }}
-            onFieldBlur={() => {
-              setDistributionErrors(validateDistributionPhase(distributionData))
-            }}
-          />
-
-          <div className="flex justify-end">
-            <Button type="submit" className="min-w-48 bg-soil-800">
-              Calcular
-            </Button>
-          </div>
-        </form>
+        </div>
       </div>
     </TabsContent>
   )
