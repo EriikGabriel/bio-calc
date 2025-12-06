@@ -1,6 +1,11 @@
+import type { FieldErrors } from "@/types/forms"
+import { validateDistributionPhase } from "@/utils/validations/distribution-phase-validation"
+import { validateIndustrialPhase } from "@/utils/validations/industrial-phase-validation"
 import {
   AGRICULTURAL_PHASE_INITIAL,
   COMPANY_INFO_INITIAL,
+  DISTRIBUTION_PHASE_INITIAL,
+  INDUSTRIAL_PHASE_INITIAL,
 } from "@constants/initial-states"
 import { Button } from "@ui/button"
 import { TabsContent } from "@ui/tabs"
@@ -18,6 +23,12 @@ import type {
   CompanyFormData,
 } from "./sections/company-info-section"
 import { CompanyInfoSection } from "./sections/company-info-section"
+import DistributionPhaseSection from "./sections/distribution-phase-section"
+import {
+  IndustrialPhaseSection,
+  type IndustrialPhaseFieldErrors,
+  type IndustrialPhaseFormData,
+} from "./sections/industrial-phase-section"
 
 export function CalculatorContent() {
   const [companyInfo, setCompanyInfo] =
@@ -28,14 +39,39 @@ export function CalculatorContent() {
   const [agriculturalErrors, setAgriculturalErrors] =
     useState<AgriculturalPhaseFieldErrors>({})
 
+  const [industrialData, setIndustrialData] = useState<IndustrialPhaseFormData>(
+    INDUSTRIAL_PHASE_INITIAL
+  )
+  const [industrialErrors, setIndustrialErrors] =
+    useState<IndustrialPhaseFieldErrors>({})
+
+  const [distributionData, setDistributionData] = useState(
+    DISTRIBUTION_PHASE_INITIAL
+  )
+  const [distributionErrors, setDistributionErrors] = useState<FieldErrors>({})
+
   function handleSubmitAll(e: React.FormEvent) {
     e.preventDefault()
     const v1 = validateCompanyInfo(companyInfo)
     const v2 = validateAgriculturalPhase(agriculturalData)
+    const v3 = validateIndustrialPhase(industrialData)
+    const v4 = validateDistributionPhase(distributionData)
     setCompanyErrors(v1)
     setAgriculturalErrors(v2)
-    if (Object.keys(v1).length === 0 && Object.keys(v2).length === 0) {
-      console.log("Payload completo:", { companyInfo, agriculturalData })
+    setIndustrialErrors(v3)
+    setDistributionErrors(v4)
+    if (
+      Object.keys(v1).length === 0 &&
+      Object.keys(v2).length === 0 &&
+      Object.keys(v3).length === 0 &&
+      Object.keys(v4).length === 0
+    ) {
+      console.log("Payload completo:", {
+        companyInfo,
+        agriculturalData,
+        industrialData,
+        distributionData,
+      })
     }
   }
 
@@ -81,6 +117,29 @@ export function CalculatorContent() {
               setAgriculturalErrors(validateAgriculturalPhase(agriculturalData))
             }}
           />
+
+          <IndustrialPhaseSection
+            data={industrialData}
+            errors={industrialErrors}
+            onFieldChange={(name, value) => {
+              setIndustrialData((d) => ({ ...d, [name]: value }))
+            }}
+            onFieldBlur={() => {
+              setIndustrialErrors(validateIndustrialPhase(industrialData))
+            }}
+          />
+
+          <DistributionPhaseSection
+            data={distributionData}
+            errors={distributionErrors}
+            onFieldChange={(name, value) => {
+              setDistributionData((d) => ({ ...d, [name]: value }))
+            }}
+            onFieldBlur={() => {
+              setDistributionErrors(validateDistributionPhase(distributionData))
+            }}
+          />
+
           <div className="flex justify-end">
             <Button type="submit" className="min-w-48 bg-soil-800">
               Calcular

@@ -1,4 +1,7 @@
 import { BIOMASS_TYPES } from "@constants/biomass"
+import { BR_STATES } from "@constants/state"
+import { VEHICLE_TYPES } from "@constants/transport"
+import { WOOD_RESIDUE_STAGES } from "@constants/wood"
 import {
   Field,
   FieldContent,
@@ -10,8 +13,10 @@ import {
   FieldSet,
 } from "@ui/field"
 import { Input } from "@ui/input"
-import { GiCorn } from "react-icons/gi"
+import { GiCorn, GiFarmTractor } from "react-icons/gi"
+
 import { MdAgriculture } from "react-icons/md"
+import { PiFarmFill } from "react-icons/pi"
 export interface AgriculturalPhaseFormData {
   biomassType: string
   hasConsumptionInfo: "yes" | "no" | ""
@@ -22,11 +27,23 @@ export interface AgriculturalPhaseFormData {
   cornStarchConsumptionFactor: string // auto
   cornStarchImpact: string // auto
   biomassProductionImpact: string // auto (result)
+  // Mudança de Uso da Terra (MUT)
+  biomassProductionState: string
+  cultivationType: string // auto
+  woodResidueLifecycleStage: string
+  mutImpactFactor: string // auto
+  mutAllocationPercent: string
+  mutImpactResult: string // auto
+  // Transporte da biomassa
+  transportDistanceKm: string
+  transportVehicleType: string
+  averageBiomassPerVehicleTon: string // auto
+  transportDemandTkm: string // auto
+  transportImpactResult: string // auto
 }
 
-export interface AgriculturalPhaseFieldErrors {
-  [K: string]: string | undefined
-}
+import type { FieldErrors } from "@/types/forms"
+export type AgriculturalPhaseFieldErrors = FieldErrors
 
 export function AgriculturalPhaseSection({
   data,
@@ -39,6 +56,7 @@ export function AgriculturalPhaseSection({
   onFieldChange: (name: keyof AgriculturalPhaseFormData, value: string) => void
   onFieldBlur?: (name: keyof AgriculturalPhaseFormData) => void
 }) {
+  // Select options imported from constants
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
@@ -55,11 +73,11 @@ export function AgriculturalPhaseSection({
   return (
     <section className="space-y-6">
       <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-forest-600">
-        <MdAgriculture className="inline mr-2 size-8 " /> Fase Agricola
+        <MdAgriculture className="inline mr-2 size-8" /> Fase Agricola
       </h1>
       <FieldSet>
         <FieldLegend className="flex items-center text-forest-600">
-          <GiCorn className="inline mr-2 size-5 " /> Produção de Biomassa
+          <GiCorn className="inline mr-2 size-5" /> Produção de Biomassa
         </FieldLegend>
         <FieldGroup className="flex gap-3">
           <div className="flex gap-3">
@@ -211,7 +229,7 @@ export function AgriculturalPhaseSection({
                 <Input
                   id="cornStarchConsumptionFactor"
                   name="cornStarchConsumptionFactor"
-                  placeholder="preenchimento automático"
+                  placeholder="Preenchimento automático"
                   value={data.cornStarchConsumptionFactor}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -279,6 +297,346 @@ export function AgriculturalPhaseSection({
                   errors={
                     errors.biomassProductionImpact
                       ? [{ message: errors.biomassProductionImpact }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+          </div>
+        </FieldGroup>
+      </FieldSet>
+
+      {/* Mudança de Uso da Terra (MUT) */}
+      <FieldSet>
+        <FieldLegend className="flex items-center text-forest-600">
+          <PiFarmFill className="inline mr-2 size-5" />
+          Mudança de Uso da Terra
+        </FieldLegend>
+        <FieldGroup className="flex gap-3">
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="biomassProductionState">
+                Estado da produção da Biomassa
+              </FieldLabel>
+              <FieldContent>
+                <select
+                  id="biomassProductionState"
+                  name="biomassProductionState"
+                  value={data.biomassProductionState}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.biomassProductionState}
+                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                >
+                  <option value="" disabled>
+                    Selecionar na lista suspensa
+                  </option>
+                  {BR_STATES.map((uf) => (
+                    <option key={uf} value={uf}>
+                      {uf}
+                    </option>
+                  ))}
+                </select>
+                <FieldError
+                  errors={
+                    errors.biomassProductionState
+                      ? [{ message: errors.biomassProductionState }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="cultivationType">
+                Cultivo agrícola
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="cultivationType"
+                  name="cultivationType"
+                  placeholder="Preenchimento automático"
+                  value={data.cultivationType}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.cultivationType}
+                  disabled
+                />
+                <FieldDescription>preenchimento automático</FieldDescription>
+                <FieldError
+                  errors={
+                    errors.cultivationType
+                      ? [{ message: errors.cultivationType }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+          </div>
+
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="woodResidueLifecycleStage">
+                Etapa do ciclo de vida da madeira de onde os resíduos foram
+                obtidos
+              </FieldLabel>
+              <FieldContent>
+                <select
+                  id="woodResidueLifecycleStage"
+                  name="woodResidueLifecycleStage"
+                  value={data.woodResidueLifecycleStage}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.woodResidueLifecycleStage}
+                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                >
+                  <option value="" disabled>
+                    Selecionar na lista suspensa
+                  </option>
+                  {WOOD_RESIDUE_STAGES.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+                <FieldError
+                  errors={
+                    errors.woodResidueLifecycleStage
+                      ? [{ message: errors.woodResidueLifecycleStage }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="mutImpactFactor">
+                Fator de impacto do MUT
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="mutImpactFactor"
+                  name="mutImpactFactor"
+                  placeholder="Preenchimento automático"
+                  value={data.mutImpactFactor}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.mutImpactFactor}
+                  disabled
+                />
+                <FieldDescription>kg CO₂ eq. / kg biomassa</FieldDescription>
+                <FieldError
+                  errors={
+                    errors.mutImpactFactor
+                      ? [{ message: errors.mutImpactFactor }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+          </div>
+
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="mutAllocationPercent">
+                Percentual de alocação da biomassa
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="mutAllocationPercent"
+                  name="mutAllocationPercent"
+                  placeholder="Ex.: 32,50"
+                  value={data.mutAllocationPercent}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  inputMode="decimal"
+                  aria-invalid={!!errors.mutAllocationPercent}
+                />
+                <FieldDescription>%</FieldDescription>
+                <FieldError
+                  errors={
+                    errors.mutAllocationPercent
+                      ? [{ message: errors.mutAllocationPercent }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="mutImpactResult">Impacto MUT</FieldLabel>
+              <FieldContent>
+                <Input
+                  id="mutImpactResult"
+                  name="mutImpactResult"
+                  placeholder="Preenchimento automático"
+                  value={data.mutImpactResult}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.mutImpactResult}
+                  disabled
+                />
+                <FieldDescription>
+                  kg CO₂ eq. / MJ de biocombustível
+                </FieldDescription>
+                <FieldError
+                  errors={
+                    errors.mutImpactResult
+                      ? [{ message: errors.mutImpactResult }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+          </div>
+        </FieldGroup>
+      </FieldSet>
+
+      {/* Transporte da biomassa até a planta industrial */}
+      <FieldSet>
+        <FieldLegend className="flex items-center text-forest-600">
+          <GiFarmTractor className="inline mr-2 size-5" /> Transporte da
+          biomassa até a planta industrial
+        </FieldLegend>
+        <FieldGroup className="flex gap-3">
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="transportDistanceKm">
+                Distância de transporte da biomassa até a fábrica
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="transportDistanceKm"
+                  name="transportDistanceKm"
+                  placeholder="Ex.: 100,00"
+                  value={data.transportDistanceKm}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  inputMode="decimal"
+                  aria-invalid={!!errors.transportDistanceKm}
+                />
+                <FieldDescription>km</FieldDescription>
+                <FieldError
+                  errors={
+                    errors.transportDistanceKm
+                      ? [{ message: errors.transportDistanceKm }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="transportVehicleType">
+                Tipo de veículo usado no transporte
+              </FieldLabel>
+              <FieldContent>
+                <select
+                  id="transportVehicleType"
+                  name="transportVehicleType"
+                  value={data.transportVehicleType}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.transportVehicleType}
+                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                >
+                  <option value="" disabled>
+                    Selecionar na lista suspensa
+                  </option>
+                  {VEHICLE_TYPES.map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </select>
+                <FieldError
+                  errors={
+                    errors.transportVehicleType
+                      ? [{ message: errors.transportVehicleType }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+          </div>
+
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="averageBiomassPerVehicleTon">
+                Quantidade média de Biomassa transportada por veículo
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="averageBiomassPerVehicleTon"
+                  name="averageBiomassPerVehicleTon"
+                  placeholder="Preenchimento automático"
+                  value={data.averageBiomassPerVehicleTon}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.averageBiomassPerVehicleTon}
+                  disabled
+                />
+                <FieldDescription>tonelada</FieldDescription>
+                <FieldError
+                  errors={
+                    errors.averageBiomassPerVehicleTon
+                      ? [{ message: errors.averageBiomassPerVehicleTon }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="transportDemandTkm">
+                Demanda de transporte
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="transportDemandTkm"
+                  name="transportDemandTkm"
+                  placeholder="Preenchimento automático"
+                  value={data.transportDemandTkm}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.transportDemandTkm}
+                  disabled
+                />
+                <FieldDescription>t.km</FieldDescription>
+                <FieldError
+                  errors={
+                    errors.transportDemandTkm
+                      ? [{ message: errors.transportDemandTkm }]
+                      : []
+                  }
+                />
+              </FieldContent>
+            </Field>
+          </div>
+
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="transportImpactResult">
+                Impacto do transporte da biomassa
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="transportImpactResult"
+                  name="transportImpactResult"
+                  placeholder="Preenchimento automático"
+                  value={data.transportImpactResult}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.transportImpactResult}
+                  disabled
+                />
+                <FieldDescription>
+                  kg CO₂ eq. / MJ de biocombustível
+                </FieldDescription>
+                <FieldError
+                  errors={
+                    errors.transportImpactResult
+                      ? [{ message: errors.transportImpactResult }]
                       : []
                   }
                 />

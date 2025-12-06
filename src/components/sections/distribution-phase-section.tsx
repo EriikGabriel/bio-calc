@@ -1,0 +1,667 @@
+// Using native select for vehicle type for consistent UX across sections
+import {
+  Field,
+  FieldContent,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { VEHICLE_TYPES } from "@/constants/transport"
+import type { FieldErrors } from "@/types/forms"
+import React from "react"
+import { FaShip, FaTruckMoving } from "react-icons/fa"
+import { IoHome } from "react-icons/io5"
+
+export interface DistributionPhaseFormData {
+  domesticBiomassQuantityTon: string
+  domesticTransportDistanceKm: string
+  domesticRailPercent: string
+  domesticWaterwayPercent: string
+  domesticRoadPercent: string
+  domesticRoadVehicleType: string
+  // Auto-calculated/disabled display fields
+  domesticDistributionImpactKgCO2EqPerYear: string
+  domesticMjTransportedPerYear: string
+  domesticImpactKgCO2EqPerMjTransported: string
+
+  // Export section (via container marítimo)
+  exportBiomassQuantityTon: string
+  exportDistanceFactoryToNearestHydroPortKm: string
+  exportRailPercentToPort: string
+  exportWaterwayPercentToPort: string
+  exportRoadPercentToPort: string
+  exportRoadVehicleTypeToPort: string
+  exportDistancePortToForeignMarketKm: string
+  // Outputs
+  exportDistributionImpactFactoryToPortKgCO2EqPerYear: string
+  exportDistributionImpactPortToMarketKgCO2EqPerYear: string
+  exportMjTransportedPerYear: string
+  exportImpactKgCO2EqPerMjTransported: string
+}
+
+export type DistributionPhaseFieldErrors = FieldErrors
+
+interface Props {
+  data: DistributionPhaseFormData
+  errors: DistributionPhaseFieldErrors
+  onFieldChange: (name: keyof DistributionPhaseFormData, value: string) => void
+  onFieldBlur?: (name: keyof DistributionPhaseFormData) => void
+}
+
+export function DistributionPhaseSection({
+  data,
+  errors,
+  onFieldChange,
+  onFieldBlur,
+}: Props) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const { name, value } = e.target
+    onFieldChange(name as keyof DistributionPhaseFormData, value)
+  }
+
+  function handleBlur(
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const { name } = e.target
+    onFieldBlur?.(name as keyof DistributionPhaseFormData)
+  }
+
+  return (
+    <section className="space-y-6">
+      <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-forest-600">
+        <FaTruckMoving className="inline mr-2 size-8" /> Fase de Distribuição
+        <span className="ml-2 text-sm">(Transporte ao mercado consumidor)</span>
+      </h1>
+
+      <FieldSet>
+        <FieldLegend className="flex items-center text-forest-600">
+          <IoHome className="inline mr-2 size-5" /> Mercado doméstico
+        </FieldLegend>
+        <FieldGroup className="flex gap-3">
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="domesticBiomassQuantityTon">
+                Quantidade de biomassa transportada no mercado doméstico
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="domesticBiomassQuantityTon"
+                  name="domesticBiomassQuantityTon"
+                  value={data.domesticBiomassQuantityTon}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0,00"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.domesticBiomassQuantityTon}
+                />
+                <FieldError
+                  errors={
+                    errors.domesticBiomassQuantityTon
+                      ? [{ message: errors.domesticBiomassQuantityTon }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">tonelada</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="domesticTransportDistanceKm">
+                Distância de transporte até o mercado consumidor doméstico
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="domesticTransportDistanceKm"
+                  name="domesticTransportDistanceKm"
+                  value={data.domesticTransportDistanceKm}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0,00"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.domesticTransportDistanceKm}
+                />
+                <FieldError
+                  errors={
+                    errors.domesticTransportDistanceKm
+                      ? [{ message: errors.domesticTransportDistanceKm }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">km</span>
+              </FieldContent>
+            </Field>
+          </div>
+
+          <FieldSeparator />
+
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel
+                className="flex items-center gap-2"
+                htmlFor="domesticRailPercent"
+              >
+                Percentual via ferroviária
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="domesticRailPercent"
+                  name="domesticRailPercent"
+                  value={data.domesticRailPercent}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.domesticRailPercent}
+                />
+                <FieldError
+                  errors={
+                    errors.domesticRailPercent
+                      ? [{ message: errors.domesticRailPercent }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">%</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel
+                className="flex items-center gap-2"
+                htmlFor="domesticWaterwayPercent"
+              >
+                Percentual via hidroviária
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="domesticWaterwayPercent"
+                  name="domesticWaterwayPercent"
+                  value={data.domesticWaterwayPercent}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.domesticWaterwayPercent}
+                />
+                <FieldError
+                  errors={
+                    errors.domesticWaterwayPercent
+                      ? [{ message: errors.domesticWaterwayPercent }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">%</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel
+                className="flex items-center gap-2"
+                htmlFor="domesticRoadPercent"
+              >
+                Percentual via rodoviária
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="domesticRoadPercent"
+                  name="domesticRoadPercent"
+                  value={data.domesticRoadPercent}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.domesticRoadPercent}
+                />
+                <FieldError
+                  errors={
+                    errors.domesticRoadPercent
+                      ? [{ message: errors.domesticRoadPercent }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">%</span>
+              </FieldContent>
+            </Field>
+          </div>
+
+          <Field>
+            <FieldLabel htmlFor="domesticRoadVehicleType">
+              Tipo de veículo usado no transporte rodoviário
+            </FieldLabel>
+            <FieldContent>
+              <select
+                id="domesticRoadVehicleType"
+                name="domesticRoadVehicleType"
+                value={data.domesticRoadVehicleType}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.domesticRoadVehicleType}
+                className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+              >
+                <option value="" disabled>
+                  Selecione o tipo de veículo
+                </option>
+                {VEHICLE_TYPES.map((v) => (
+                  <option key={v} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </select>
+              <FieldError
+                errors={
+                  errors.domesticRoadVehicleType
+                    ? [{ message: errors.domesticRoadVehicleType }]
+                    : []
+                }
+              />
+            </FieldContent>
+          </Field>
+
+          <FieldSeparator />
+
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel>
+                Impacto da distribuição no mercado doméstico
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  value={data.domesticDistributionImpactKgCO2EqPerYear ?? 0}
+                  disabled
+                />
+                <FieldError
+                  errors={
+                    errors.domesticDistributionImpactKgCO2EqPerYear
+                      ? [
+                          {
+                            message:
+                              errors.domesticDistributionImpactKgCO2EqPerYear,
+                          },
+                        ]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel>MJ transportado anualmente</FieldLabel>
+              <FieldContent>
+                <Input
+                  value={data.domesticMjTransportedPerYear ?? 0}
+                  disabled
+                />
+                <FieldError
+                  errors={
+                    errors.domesticMjTransportedPerYear
+                      ? [{ message: errors.domesticMjTransportedPerYear }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">MJ/ano</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel>Impacto da distribuição</FieldLabel>
+              <FieldContent>
+                <Input
+                  value={data.domesticImpactKgCO2EqPerMjTransported ?? 0}
+                  disabled
+                />
+                <FieldError
+                  errors={
+                    errors.domesticImpactKgCO2EqPerMjTransported
+                      ? [
+                          {
+                            message:
+                              errors.domesticImpactKgCO2EqPerMjTransported,
+                          },
+                        ]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">
+                  kg CO2 eq. / MJ transportado
+                </span>
+              </FieldContent>
+            </Field>
+          </div>
+        </FieldGroup>
+      </FieldSet>
+
+      {/* Exportação - via container marítimo */}
+      <FieldSet>
+        <FieldLegend className="flex items-center text-forest-600">
+          <FaShip className="inline mr-2 size-5" /> Exportação - via container
+          marítimo
+        </FieldLegend>
+        <FieldGroup className="flex gap-3">
+          {/* Quantity and factory→nearest hydro port distance */}
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="exportBiomassQuantityTon">
+                Quantidade de biocombustível sólido exportado via container
+                marítimo
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="exportBiomassQuantityTon"
+                  name="exportBiomassQuantityTon"
+                  value={data.exportBiomassQuantityTon}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0,00"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.exportBiomassQuantityTon}
+                />
+                <FieldError
+                  errors={
+                    errors.exportBiomassQuantityTon
+                      ? [{ message: errors.exportBiomassQuantityTon }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">tonelada(s)</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="exportDistanceFactoryToNearestHydroPortKm">
+                Distância da fábrica ao porto hidroviário mais próximo
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="exportDistanceFactoryToNearestHydroPortKm"
+                  name="exportDistanceFactoryToNearestHydroPortKm"
+                  value={data.exportDistanceFactoryToNearestHydroPortKm}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0,00"
+                  inputMode="decimal"
+                  aria-invalid={
+                    !!errors.exportDistanceFactoryToNearestHydroPortKm
+                  }
+                />
+                <FieldError
+                  errors={
+                    errors.exportDistanceFactoryToNearestHydroPortKm
+                      ? [
+                          {
+                            message:
+                              errors.exportDistanceFactoryToNearestHydroPortKm,
+                          },
+                        ]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">km</span>
+              </FieldContent>
+            </Field>
+          </div>
+
+          <FieldSeparator />
+
+          {/* Percent modal to port */}
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel htmlFor="exportRailPercentToPort">
+                Refere-se ao percentual da distância até o porto hidroviário
+                distribuído exclusivamente por via ferroviária
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="exportRailPercentToPort"
+                  name="exportRailPercentToPort"
+                  value={data.exportRailPercentToPort}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.exportRailPercentToPort}
+                />
+                <FieldError
+                  errors={
+                    errors.exportRailPercentToPort
+                      ? [{ message: errors.exportRailPercentToPort }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">%</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="exportWaterwayPercentToPort">
+                Refere-se ao percentual da distância até o porto hidroviário
+                distribuído exclusivamente por via hidroviária
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="exportWaterwayPercentToPort"
+                  name="exportWaterwayPercentToPort"
+                  value={data.exportWaterwayPercentToPort}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.exportWaterwayPercentToPort}
+                />
+                <FieldError
+                  errors={
+                    errors.exportWaterwayPercentToPort
+                      ? [{ message: errors.exportWaterwayPercentToPort }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">%</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="exportRoadPercentToPort">
+                Refere-se ao percentual da distância até o porto hidroviário
+                distribuído exclusivamente por via rodoviária
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  id="exportRoadPercentToPort"
+                  name="exportRoadPercentToPort"
+                  value={data.exportRoadPercentToPort}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="0"
+                  inputMode="decimal"
+                  aria-invalid={!!errors.exportRoadPercentToPort}
+                />
+                <FieldError
+                  errors={
+                    errors.exportRoadPercentToPort
+                      ? [{ message: errors.exportRoadPercentToPort }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">%</span>
+              </FieldContent>
+            </Field>
+          </div>
+
+          {/* Vehicle type for road to port */}
+          <Field>
+            <FieldLabel htmlFor="exportRoadVehicleTypeToPort">
+              Tipo de veículo usado no transporte rodoviário até o porto
+            </FieldLabel>
+            <FieldContent>
+              <select
+                id="exportRoadVehicleTypeToPort"
+                name="exportRoadVehicleTypeToPort"
+                value={data.exportRoadVehicleTypeToPort}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.exportRoadVehicleTypeToPort}
+                className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+              >
+                <option value="" disabled>
+                  Selecione o tipo de veículo
+                </option>
+                {VEHICLE_TYPES.map((v) => (
+                  <option key={v} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </select>
+              <FieldError
+                errors={
+                  errors.exportRoadVehicleTypeToPort
+                    ? [{ message: errors.exportRoadVehicleTypeToPort }]
+                    : []
+                }
+              />
+            </FieldContent>
+          </Field>
+
+          {/* Distance from port to foreign market */}
+          <Field>
+            <FieldLabel htmlFor="exportDistancePortToForeignMarketKm">
+              Distância do porto hidroviário ao mercado consumidor final
+              (externo)
+            </FieldLabel>
+            <FieldContent>
+              <Input
+                id="exportDistancePortToForeignMarketKm"
+                name="exportDistancePortToForeignMarketKm"
+                value={data.exportDistancePortToForeignMarketKm}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="0,00"
+                inputMode="decimal"
+                aria-invalid={!!errors.exportDistancePortToForeignMarketKm}
+              />
+              <FieldError
+                errors={
+                  errors.exportDistancePortToForeignMarketKm
+                    ? [
+                        {
+                          message: errors.exportDistancePortToForeignMarketKm,
+                        },
+                      ]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">km</span>
+            </FieldContent>
+          </Field>
+
+          <FieldSeparator />
+
+          {/* Outputs */}
+          <div className="flex gap-3">
+            <Field>
+              <FieldLabel>
+                Impacto da fase de distribuição no mercado externo (trecho
+                fábrica→porto)
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  value={
+                    data.exportDistributionImpactFactoryToPortKgCO2EqPerYear ??
+                    0
+                  }
+                  disabled
+                />
+                <FieldError
+                  errors={
+                    errors.exportDistributionImpactFactoryToPortKgCO2EqPerYear
+                      ? [
+                          {
+                            message:
+                              errors.exportDistributionImpactFactoryToPortKgCO2EqPerYear,
+                          },
+                        ]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel>
+                Impacto da fase de distribuição no mercado externo (trecho
+                porto→mercado consumidor final)
+              </FieldLabel>
+              <FieldContent>
+                <Input
+                  value={
+                    data.exportDistributionImpactPortToMarketKgCO2EqPerYear ?? 0
+                  }
+                  disabled
+                />
+                <FieldError
+                  errors={
+                    errors.exportDistributionImpactPortToMarketKgCO2EqPerYear
+                      ? [
+                          {
+                            message:
+                              errors.exportDistributionImpactPortToMarketKgCO2EqPerYear,
+                          },
+                        ]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel>MJ exportado por ano</FieldLabel>
+              <FieldContent>
+                <Input value={data.exportMjTransportedPerYear ?? 0} disabled />
+                <FieldError
+                  errors={
+                    errors.exportMjTransportedPerYear
+                      ? [{ message: errors.exportMjTransportedPerYear }]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">MJ/ano</span>
+              </FieldContent>
+            </Field>
+
+            <Field>
+              <FieldLabel>Impacto da exportação</FieldLabel>
+              <FieldContent>
+                <Input
+                  value={data.exportImpactKgCO2EqPerMjTransported ?? 0}
+                  disabled
+                />
+                <FieldError
+                  errors={
+                    errors.exportImpactKgCO2EqPerMjTransported
+                      ? [
+                          {
+                            message: errors.exportImpactKgCO2EqPerMjTransported,
+                          },
+                        ]
+                      : []
+                  }
+                />
+                <span className="text-xs text-gray-500">
+                  kg CO2 eq. / MJ transportado
+                </span>
+              </FieldContent>
+            </Field>
+          </div>
+        </FieldGroup>
+      </FieldSet>
+    </section>
+  )
+}
+
+export default DistributionPhaseSection
