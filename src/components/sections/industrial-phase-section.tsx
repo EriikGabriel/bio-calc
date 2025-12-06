@@ -119,7 +119,7 @@ export function IndustrialPhaseSection({
                   <option value="Não">Não</option>
                   <option value="Sim">Sim</option>
                 </select>
-                <FieldDescription className="text-red-600">
+                <FieldDescription>
                   (não considerar a biomassa usada na co-geração, se houver)
                 </FieldDescription>
                 <FieldError

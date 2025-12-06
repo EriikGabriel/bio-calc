@@ -564,8 +564,7 @@ export function DistributionPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel>
-                Impacto da fase de distribuição no mercado externo (trecho
-                fábrica→porto)
+                Impacto da fase de distribuição no mercado externo
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -593,8 +592,7 @@ export function DistributionPhaseSection({
 
             <Field>
               <FieldLabel>
-                Impacto da fase de distribuição no mercado externo (trecho
-                porto→mercado consumidor final)
+                Impacto da fase de distribuição no mercado externo
               </FieldLabel>
               <FieldContent>
                 <Input
