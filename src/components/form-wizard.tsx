@@ -31,18 +31,22 @@ export function FormWizard({
   const isLast = current === steps.length - 1
 
   async function handleNext() {
-    setCurrent((i) => Math.min(i + 1, steps.length - 1))
+    // Validate current step first, then move forward exactly one step
     const step = steps[current]
     let ok = true
-    if (step.onValidate) {
+    if (step?.onValidate) {
       ok = await step.onValidate()
     }
     if (!ok) return
-    if (isLast) {
+
+    // Recompute last status based on current index
+    const last = current === steps.length - 1
+    if (last) {
       await onFinish?.()
-    } else {
-      setCurrent((i) => Math.min(i + 1, steps.length - 1))
+      return
     }
+
+    setCurrent((i) => Math.min(i + 1, steps.length - 1))
   }
 
   function handleBack() {
