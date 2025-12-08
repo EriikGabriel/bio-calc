@@ -1,16 +1,6 @@
 import type { FieldErrors } from "@/types/forms"
 import type { IndustrialPhaseFormData } from "@components/sections/industrial-phase-section"
-
-function isEmpty(v: string | undefined | null) {
-  return !v || v.trim() === ""
-}
-
-function isValidNumber(v: string) {
-  if (isEmpty(v)) return true // allow empty where optional; use required checks separately
-  // Accept dot or comma as decimal separator, allow thousand separators with dot
-  const normalized = v.replace(/\./g, "").replace(",", ".")
-  return !Number.isNaN(Number(normalized))
-}
+import { isEmpty, isValidNumber } from "./common"
 
 export function validateIndustrialPhase(
   form: IndustrialPhaseFormData

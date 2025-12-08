@@ -87,7 +87,7 @@ export function DistributionPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="domesticBiomassQuantityTon">
-                Quantidade de biomassa transportada no mercado doméstico
+                Quantidade de biomassa transportada no mercado doméstico *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -113,7 +113,7 @@ export function DistributionPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="domesticTransportDistanceKm">
-                Distância de transporte até o mercado consumidor doméstico
+                Distância de transporte até o mercado consumidor doméstico *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -146,7 +146,7 @@ export function DistributionPhaseSection({
                 className="flex items-center gap-2"
                 htmlFor="domesticRailPercent"
               >
-                Percentual via ferroviária
+                Percentual via ferroviária *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -175,7 +175,7 @@ export function DistributionPhaseSection({
                 className="flex items-center gap-2"
                 htmlFor="domesticWaterwayPercent"
               >
-                Percentual via hidroviária
+                Percentual via hidroviária *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -204,7 +204,7 @@ export function DistributionPhaseSection({
                 className="flex items-center gap-2"
                 htmlFor="domesticRoadPercent"
               >
-                Percentual via rodoviária
+                Percentual via rodoviária *
               </FieldLabel>
               <FieldContent>
                 <Input

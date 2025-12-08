@@ -130,9 +130,6 @@ export function CalculatorContent() {
                     onFieldChange={(name, value) => {
                       setCompanyInfo((d) => ({ ...d, [name]: value }))
                     }}
-                    onFieldBlur={() => {
-                      setCompanyErrors(validateCompanyInfo(companyInfo))
-                    }}
                   />
                 ),
                 onValidate: () => {
@@ -154,11 +151,6 @@ export function CalculatorContent() {
                         return { ...d, [name]: value }
                       })
                     }}
-                    onFieldBlur={() => {
-                      setAgriculturalErrors(
-                        validateAgriculturalPhase(agriculturalData)
-                      )
-                    }}
                   />
                 ),
                 onValidate: () => {
@@ -178,11 +170,6 @@ export function CalculatorContent() {
                     onFieldChange={(name, value) => {
                       setIndustrialData((d) => ({ ...d, [name]: value }))
                     }}
-                    onFieldBlur={() => {
-                      setIndustrialErrors(
-                        validateIndustrialPhase(industrialData)
-                      )
-                    }}
                   />
                 ),
                 onValidate: () => {
@@ -201,11 +188,6 @@ export function CalculatorContent() {
                     errors={distributionErrors}
                     onFieldChange={(name, value) => {
                       setDistributionData((d) => ({ ...d, [name]: value }))
-                    }}
-                    onFieldBlur={() => {
-                      setDistributionErrors(
-                        validateDistributionPhase(distributionData)
-                      )
                     }}
                   />
                 ),

@@ -2,20 +2,41 @@ import type {
   CompanyFieldErrors,
   CompanyFormData,
 } from "@components/sections/company-info-section"
+import { isEmpty, isValidEmail } from "./common"
 
 export function validateCompanyInfo(form: CompanyFormData): CompanyFieldErrors {
   const errors: CompanyFieldErrors = {}
   const cnpjClean = form.taxId.replace(/\D/g, "")
 
-  if (!form.companyName.trim()) errors.companyName = "Informe o nome da empresa"
-  if (cnpjClean.length !== 14) errors.taxId = "CNPJ deve ter 14 dígitos"
-  if (!form.state) errors.state = "Selecione UF"
-  if (!form.city.trim()) errors.city = "Informe a cidade"
-  if (!form.contactPerson.trim()) errors.contactPerson = "Informe o responsável"
-  if (form.phone && form.phone.replace(/\D/g, "").length < 10)
+  if (isEmpty(form.companyName)) {
+    errors.companyName = "Informe o nome da empresa"
+  }
+
+  if (cnpjClean.length !== 14) {
+    errors.taxId = "CNPJ deve ter 14 dígitos"
+  }
+
+  if (isEmpty(form.state)) {
+    errors.state = "Selecione UF"
+  }
+
+  if (isEmpty(form.city)) {
+    errors.city = "Informe a cidade"
+  }
+
+  if (isEmpty(form.contactPerson)) {
+    errors.contactPerson = "Informe o responsável"
+  }
+
+  if (!isEmpty(form.phone) && form.phone.replace(/\D/g, "").length < 10) {
     errors.phone = "Telefone incompleto"
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email))
+  }
+
+  if (isEmpty(form.email)) {
+    errors.email = "E-mail é obrigatório"
+  } else if (!isValidEmail(form.email)) {
     errors.email = "E-mail inválido"
+  }
 
   return errors
 }

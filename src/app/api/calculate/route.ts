@@ -1,15 +1,9 @@
 import type { CalculateResponse } from "@/types/api"
+import { toNumber } from "@/utils/number"
 import { readFileSync } from "fs"
 import { NextResponse } from "next/server"
 import { join } from "path"
 import * as XLSX from "xlsx"
-
-function toNumber(raw: unknown, defaultValue = 0): number {
-  if (typeof raw !== "string") return defaultValue
-  const cleaned = raw.replace(/\s+/g, "").replace(/\./g, "").replace(",", ".")
-  const n = Number(cleaned)
-  return Number.isFinite(n) ? n : defaultValue
-}
 
 // Contract types (kept minimal to decouple from UI types)
 // Import request types from shared API types

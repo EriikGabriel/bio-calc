@@ -101,7 +101,7 @@ export function IndustrialPhaseSection({
             <Field>
               <FieldLabel htmlFor="hasCogeneration">
                 Existe co-geração de energia (aproveitamento da biomassa na
-                geração de energia)
+                geração de energia) *
               </FieldLabel>
               <FieldContent>
                 <select
@@ -134,7 +134,7 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="processedBiomassKgPerYear">
-                Quantidade de biomassa processada
+                Quantidade de biomassa processada *
               </FieldLabel>
               <FieldContent>
                 <Input

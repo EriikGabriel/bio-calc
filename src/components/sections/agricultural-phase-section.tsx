@@ -234,7 +234,7 @@ export function AgriculturalPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="cornStarchInput">
-                Entrada de amido de milho
+                Entrada de amido de milho *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -325,7 +325,7 @@ export function AgriculturalPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="biomassProductionState">
-                Estado da produção da Biomassa
+                Estado da produção da Biomassa *
               </FieldLabel>
               <FieldContent>
                 <select
@@ -391,7 +391,7 @@ export function AgriculturalPhaseSection({
             <Field>
               <FieldLabel htmlFor="woodResidueLifecycleStage">
                 Etapa do ciclo de vida da madeira de onde os resíduos foram
-                obtidos
+                obtidos *
               </FieldLabel>
               <FieldContent>
                 <select
@@ -456,7 +456,7 @@ export function AgriculturalPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="mutAllocationPercent">
-                Percentual de alocação da biomassa
+                Percentual de alocação da biomassa *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -519,7 +519,7 @@ export function AgriculturalPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="transportDistanceKm">
-                Distância de transporte da biomassa até a fábrica
+                Distância de transporte da biomassa até a fábrica *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -545,7 +545,7 @@ export function AgriculturalPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="transportVehicleType">
-                Tipo de veículo usado no transporte
+                Tipo de veículo usado no transporte *
               </FieldLabel>
               <FieldContent>
                 <select
