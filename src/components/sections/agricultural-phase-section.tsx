@@ -1,7 +1,5 @@
-import { BIOMASS_TYPES } from "@constants/biomass"
-import { BR_STATES } from "@constants/state"
-import { VEHICLE_TYPES } from "@constants/transport"
-import { WOOD_RESIDUE_STAGES } from "@constants/wood"
+import { getDropdownOptions } from "@/services/calc-api"
+import { useLoadCombinedOnVisible } from "@/utils/visibility"
 import {
   Field,
   FieldContent,
@@ -13,10 +11,13 @@ import {
   FieldSet,
 } from "@ui/field"
 import { Input } from "@ui/input"
+import isEqual from "lodash/isEqual"
+import { useRef, useState } from "react"
 import { GiCorn, GiFarmTractor } from "react-icons/gi"
 
 import { MdAgriculture } from "react-icons/md"
 import { PiFarmFill } from "react-icons/pi"
+
 export interface AgriculturalPhaseFormData {
   biomassType: string
   hasConsumptionInfo: "yes" | "no" | ""
@@ -56,13 +57,42 @@ export function AgriculturalPhaseSection({
   onFieldChange: (name: keyof AgriculturalPhaseFormData, value: string) => void
   onFieldBlur?: (name: keyof AgriculturalPhaseFormData) => void
 }) {
-  // Select options imported from constants
+  const [biomassOptions, setBiomassOptions] = useState<string[]>([])
+  const [stateOptions, setStateOptions] = useState<string[]>([])
+  const [woodResidueOptions, setWoodResidueOptions] = useState<string[]>([])
+  const [vehicleTypeOptions, setVehicleTypeOptions] = useState<string[]>([])
+  const sectionRef = useRef<HTMLElement | null>(null)
+
+  useLoadCombinedOnVisible(
+    sectionRef,
+    async () => {
+      const [biomass, states, woodResidue, vehicleTypes] = await Promise.all([
+        getDropdownOptions("Dados auxiliares", "B7:B12"),
+        getDropdownOptions("Dados auxiliares", "B97:B123"),
+        getDropdownOptions("Dados auxiliares", "L81:L92"),
+        getDropdownOptions("Dados auxiliares", "B70:B76"),
+      ])
+      return { biomass, states, woodResidue, vehicleTypes }
+    },
+    ({ biomass, states, woodResidue, vehicleTypes }) => {
+      setBiomassOptions((prev) => (isEqual(prev, biomass) ? prev : biomass))
+      setStateOptions((prev) => (isEqual(prev, states) ? prev : states))
+      setWoodResidueOptions((prev) =>
+        isEqual(prev, woodResidue) ? prev : woodResidue
+      )
+      setVehicleTypeOptions((prev) =>
+        isEqual(prev, vehicleTypes) ? prev : vehicleTypes
+      )
+    }
+  )
+
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target
     onFieldChange(name as keyof AgriculturalPhaseFormData, value)
   }
+
   function handleBlur(
     e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>
   ) {
@@ -71,7 +101,7 @@ export function AgriculturalPhaseSection({
   }
 
   return (
-    <section className="space-y-6">
+    <section ref={sectionRef} className="space-y-6">
       <h1 className="text-xl border-b pb-1 border-forest-600/70 font-bold flex items-center text-soil-800">
         <MdAgriculture className="inline mr-2 size-8" /> Fase Agricola
       </h1>
@@ -91,12 +121,16 @@ export function AgriculturalPhaseSection({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   aria-invalid={!!errors.biomassType}
-                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className={`h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:ring-[3px] ${
+                    errors.biomassType
+                      ? "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/50"
+                      : "focus-visible:border-ring focus-visible:ring-ring/50"
+                  }`}
                 >
                   <option value="" disabled>
                     Selecionar na lista suspensa
                   </option>
-                  {BIOMASS_TYPES.map((t) => (
+                  {biomassOptions.map((t) => (
                     <option key={t} value={t}>
                       {t}
                     </option>
@@ -326,12 +360,16 @@ export function AgriculturalPhaseSection({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   aria-invalid={!!errors.biomassProductionState}
-                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className={`h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:ring-[3px] ${
+                    errors.biomassProductionState
+                      ? "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/50"
+                      : "focus-visible:border-ring focus-visible:ring-ring/50"
+                  }`}
                 >
                   <option value="" disabled>
                     Selecionar na lista suspensa
                   </option>
-                  {BR_STATES.map((uf) => (
+                  {stateOptions.map((uf) => (
                     <option key={uf} value={uf}>
                       {uf}
                     </option>
@@ -388,12 +426,16 @@ export function AgriculturalPhaseSection({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   aria-invalid={!!errors.woodResidueLifecycleStage}
-                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className={`h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:ring-[3px] ${
+                    errors.woodResidueLifecycleStage
+                      ? "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/50"
+                      : "focus-visible:border-ring focus-visible:ring-ring/50"
+                  }`}
                 >
                   <option value="" disabled>
                     Selecionar na lista suspensa
                   </option>
-                  {WOOD_RESIDUE_STAGES.map((s) => (
+                  {woodResidueOptions.map((s) => (
                     <option key={s} value={s}>
                       {s}
                     </option>
@@ -538,12 +580,16 @@ export function AgriculturalPhaseSection({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   aria-invalid={!!errors.transportVehicleType}
-                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className={`h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:ring-[3px] ${
+                    errors.transportVehicleType
+                      ? "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/50"
+                      : "focus-visible:border-ring focus-visible:ring-ring/50"
+                  }`}
                 >
                   <option value="" disabled>
                     Selecionar na lista suspensa
                   </option>
-                  {VEHICLE_TYPES.map((v) => (
+                  {vehicleTypeOptions.map((v) => (
                     <option key={v} value={v}>
                       {v}
                     </option>

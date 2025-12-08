@@ -10,6 +10,10 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-100: oklch(93.6% 0.032 17.717);
+    --color-red-300: oklch(80.8% 0.114 19.571);
+    --color-red-500: oklch(63.7% 0.237 25.331);
+    --color-red-800: oklch(44.4% 0.177 26.899);
     --color-green-50: oklch(98.2% 0.018 155.826);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-black: #000;
@@ -295,6 +299,9 @@
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
   }
+  .mb-2 {
+    margin-bottom: calc(var(--spacing) * 2);
+  }
   .mb-3 {
     margin-bottom: calc(var(--spacing) * 3);
   }
@@ -544,6 +551,9 @@
   .self-center {
     align-self: center;
   }
+  .overflow-auto {
+    overflow: auto;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -621,6 +631,12 @@
   .border-input {
     border-color: var(--input);
   }
+  .border-red-300 {
+    border-color: var(--color-red-300);
+  }
+  .border-red-500 {
+    border-color: var(--color-red-500);
+  }
   .border-sage-500 {
     border-color: #72bda3;
   }
@@ -648,6 +664,9 @@
   .bg-forest-600\/90 {
     background-color: color-mix(in oklab, #5e8c61 90%, transparent);
   }
+  .bg-green-50 {
+    background-color: var(--color-green-50);
+  }
   .bg-green-50\/60 {
     background-color: color-mix(in srgb, oklch(98.2% 0.018 155.826) 60%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -671,6 +690,12 @@
   }
   .bg-primary {
     background-color: var(--primary);
+  }
+  .bg-red-100\/60 {
+    background-color: color-mix(in srgb, oklch(93.6% 0.032 17.717) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-red-100) 60%, transparent);
+    }
   }
   .bg-sage-500 {
     background-color: #72bda3;
@@ -833,6 +858,9 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
+  .whitespace-pre-wrap {
+    white-space: pre-wrap;
+  }
   .text-cedar-700 {
     color: #4e6151;
   }
@@ -859,6 +887,9 @@
   }
   .text-primary-foreground {
     color: var(--primary-foreground);
+  }
+  .text-red-800 {
+    color: var(--color-red-800);
   }
   .text-secondary-foreground {
     color: var(--secondary-foreground);
@@ -1170,6 +1201,11 @@
       color: var(--accent-foreground);
     }
   }
+  .focus-visible\:border-red-500 {
+    &:focus-visible {
+      border-color: var(--color-red-500);
+    }
+  }
   .focus-visible\:border-ring {
     &:focus-visible {
       border-color: var(--ring);
@@ -1192,6 +1228,14 @@
       --tw-ring-color: var(--destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--destructive) 20%, transparent);
+      }
+    }
+  }
+  .focus-visible\:ring-red-500\/50 {
+    &:focus-visible {
+      --tw-ring-color: color-mix(in srgb, oklch(63.7% 0.237 25.331) 50%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        --tw-ring-color: color-mix(in oklab, var(--color-red-500) 50%, transparent);
       }
     }
   }
