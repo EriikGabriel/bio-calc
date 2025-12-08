@@ -7,7 +7,6 @@ export type AgriculturalInput = {
   biomassImpactFactor?: string
   biomassCalorificValue?: string
   cornStarchInput?: string
-  cornStarchConsumptionFactor?: string
   cornStarchImpact?: string
   biomassProductionImpact?: string
   biomassProductionState?: string

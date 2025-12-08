@@ -1,5 +1,4 @@
 import { FormWizard } from "@/components/form-wizard"
-import { getSheetCell, setSheetCell } from "@/services/calc-api"
 import type { FieldErrors } from "@/types/forms"
 import { buildFullPayload, buildPayloadForStep } from "@/utils/payload-builders"
 import { validateDistributionPhase } from "@/utils/validations/distribution-phase-validation"
@@ -14,7 +13,7 @@ import { TabsContent } from "@ui/tabs"
 import { validateAgriculturalPhase } from "@utils/validations/agricultural-phase-validation"
 import { validateCompanyInfo } from "@utils/validations/company-info-validation"
 import { Calculator } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import type {
   AgriculturalPhaseFieldErrors,
   AgriculturalPhaseFormData,
@@ -51,47 +50,6 @@ export function CalculatorContent() {
     DISTRIBUTION_PHASE_INITIAL
   )
   const [distributionErrors, setDistributionErrors] = useState<FieldErrors>({})
-
-  // Preenchimento automático a partir da planilha
-
-  // Fator de impacto da biomassa: ao mudar o tipo, grava em E33 e lê E36 (valor formatado w)
-  const biomassReqIdRef = useRef(0)
-  useEffect(() => {
-    let mounted = true
-    const currentId = ++biomassReqIdRef.current
-
-    const setAutomaticValue = async () => {
-      const selected = agriculturalData.biomassType
-      if (!selected) return
-
-      // 1) Persistir o tipo de biomassa selecionada na planilha (E33)
-      const writeRes = await setSheetCell("EngS_BioCalc", "E33", {
-        value: selected,
-      })
-      if (!mounted || currentId !== biomassReqIdRef.current) return
-      if (!writeRes.ok) return
-
-      // 2) Ler o fator de impacto correspondente da planilha (E36)
-      const resp = await getSheetCell("EngS_BioCalc", "E36", { recalc: true })
-      if (!mounted || currentId !== biomassReqIdRef.current) return
-
-      if (resp.ok && resp.cell) {
-        const nextValue = (resp.cell.w ??
-          (resp.cell.v != null ? String(resp.cell.v) : "")) as string
-        if (!nextValue) return
-        setAgriculturalData((d) =>
-          d.biomassImpactFactor === nextValue
-            ? d
-            : { ...d, biomassImpactFactor: nextValue }
-        )
-      }
-    }
-
-    setAutomaticValue()
-    return () => {
-      mounted = false
-    }
-  }, [agriculturalData.biomassType])
 
   function validateAll() {
     const v1 = validateCompanyInfo(companyInfo)

@@ -28,7 +28,6 @@ import type { CalculateRequest } from "@/types/api"
 // Minimal placeholder factors. TODO: Replace with spreadsheet-derived constants and formulas.
 const DEFAULT_BIOMASS_IMPACT_FACTOR = 0.05 // kg CO2e / kg
 const DEFAULT_BIOMASS_CALORIFIC_MJ_PER_KG = 16.5 // MJ/kg
-const DEFAULT_CORN_STARCH_CONSUMPTION_FACTOR = 0.012 // kg CO2e/MJ
 const DEFAULT_MUT_IMPACT_FACTOR_PER_KG = 0.02 // kg CO2e/kg
 const DEFAULT_TRANSPORT_IMPACT_PER_TKM = 0.08 // kg CO2e per t.km
 const DEFAULT_ELECTRICITY_IMPACT_FACTOR = 0.06 // kg CO2e/kWh
@@ -55,12 +54,7 @@ function calcAgricultural(input: AgriculturalInput, workbook: XLSX.WorkBook) {
     DEFAULT_BIOMASS_CALORIFIC_MJ_PER_KG
   )
 
-  const cornStarchInput = toNumber(input.cornStarchInput, 0) // kg/MJ
-  const cornStarchFactor = toNumber(
-    input.cornStarchConsumptionFactor,
-    DEFAULT_CORN_STARCH_CONSUMPTION_FACTOR
-  )
-  const cornStarchImpact = cornStarchInput * cornStarchFactor // kg CO2e/MJ
+  const cornStarchImpact = toNumber(input.cornStarchImpact, 0) // kg CO2e/MJ
 
   // Biomassa: impacto por MJ = (kg/MJ) * (kg CO2e/kg)
   const biomassImpactPerMJ = biomassSpecific * biomassImpactFactor

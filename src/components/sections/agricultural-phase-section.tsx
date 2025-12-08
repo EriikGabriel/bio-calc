@@ -1,3 +1,4 @@
+import { useAgriculturalAutofill } from "@/hooks/use-agricultural-autofill"
 import { getDropdownOptions } from "@/services/calc-api"
 import { useLoadCombinedOnVisible } from "@/utils/visibility"
 import {
@@ -25,7 +26,6 @@ export interface AgriculturalPhaseFormData {
   biomassImpactFactor: string // auto
   biomassCalorificValue: string // auto
   cornStarchInput: string
-  cornStarchConsumptionFactor: string // auto
   cornStarchImpact: string // auto
   biomassProductionImpact: string // auto (result)
   // Mudança de Uso da Terra (MUT)
@@ -85,6 +85,9 @@ export function AgriculturalPhaseSection({
       )
     }
   )
+
+  // Hook para gerenciar preenchimentos automáticos
+  useAgriculturalAutofill(data, onFieldChange)
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -256,34 +259,6 @@ export function AgriculturalPhaseSection({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="cornStarchConsumptionFactor">
-                Fator quantitativo do consumo de amido de milho
-              </FieldLabel>
-              <FieldContent>
-                <Input
-                  id="cornStarchConsumptionFactor"
-                  name="cornStarchConsumptionFactor"
-                  placeholder="Preenchimento automático"
-                  value={data.cornStarchConsumptionFactor}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.cornStarchConsumptionFactor}
-                  disabled
-                />
-                <FieldDescription>kg CO₂ eq / MJ</FieldDescription>
-                <FieldError
-                  errors={
-                    errors.cornStarchConsumptionFactor
-                      ? [{ message: errors.cornStarchConsumptionFactor }]
-                      : []
-                  }
-                />
-              </FieldContent>
-            </Field>
-          </div>
-
-          <div className="flex gap-3">
-            <Field>
               <FieldLabel htmlFor="cornStarchImpact">
                 Impacto associado ao consumo de amido de milho
               </FieldLabel>
@@ -308,35 +283,35 @@ export function AgriculturalPhaseSection({
                 />
               </FieldContent>
             </Field>
-
-            <Field>
-              <FieldLabel htmlFor="biomassProductionImpact">
-                Impacto da produção de biomassa
-              </FieldLabel>
-              <FieldContent>
-                <Input
-                  id="biomassProductionImpact"
-                  name="biomassProductionImpact"
-                  placeholder="Preenchimento automático"
-                  value={data.biomassProductionImpact}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.biomassProductionImpact}
-                  disabled
-                />
-                <FieldDescription>
-                  kg CO₂ eq. / MJ de biocombustível
-                </FieldDescription>
-                <FieldError
-                  errors={
-                    errors.biomassProductionImpact
-                      ? [{ message: errors.biomassProductionImpact }]
-                      : []
-                  }
-                />
-              </FieldContent>
-            </Field>
           </div>
+
+          <Field>
+            <FieldLabel htmlFor="biomassProductionImpact">
+              Impacto da produção de biomassa
+            </FieldLabel>
+            <FieldContent>
+              <Input
+                id="biomassProductionImpact"
+                name="biomassProductionImpact"
+                placeholder="Preenchimento automático"
+                value={data.biomassProductionImpact}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.biomassProductionImpact}
+                disabled
+              />
+              <FieldDescription>
+                kg CO₂ eq. / MJ de biocombustível
+              </FieldDescription>
+              <FieldError
+                errors={
+                  errors.biomassProductionImpact
+                    ? [{ message: errors.biomassProductionImpact }]
+                    : []
+                }
+              />
+            </FieldContent>
+          </Field>
         </FieldGroup>
       </FieldSet>
 

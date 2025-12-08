@@ -20,7 +20,6 @@ export const AGRICULTURAL_PHASE_INITIAL: AgriculturalPhaseFormData = {
   biomassImpactFactor: "",
   biomassCalorificValue: "",
   cornStarchInput: "",
-  cornStarchConsumptionFactor: "",
   cornStarchImpact: "",
   biomassProductionImpact: "",
   biomassProductionState: "",
