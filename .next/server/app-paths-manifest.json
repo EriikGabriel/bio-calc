@@ -1,5 +1,0 @@
-{
-  "/api/spreadsheet/route": "app/api/spreadsheet/route.js",
-  "/page": "app/page.js",
-  "/login/page": "app/login/page.js"
-}
