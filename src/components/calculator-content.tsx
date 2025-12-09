@@ -130,6 +130,24 @@ export function CalculatorContent() {
                     onFieldChange={(name, value) => {
                       setCompanyInfo((d) => ({ ...d, [name]: value }))
                     }}
+                    onFieldBlur={(name) => {
+                      // Validar e remover erro do campo específico se estiver correto
+                      const fullValidation = validateCompanyInfo({
+                        ...companyInfo,
+                      })
+                      if (!fullValidation[name]) {
+                        setCompanyErrors((prev) => {
+                          const newErrors = { ...prev }
+                          delete newErrors[name]
+                          return newErrors
+                        })
+                      } else {
+                        setCompanyErrors((prev) => ({
+                          ...prev,
+                          [name]: fullValidation[name],
+                        }))
+                      }
+                    }}
                   />
                 ),
                 onValidate: () => {
@@ -151,6 +169,24 @@ export function CalculatorContent() {
                         return { ...d, [name]: value }
                       })
                     }}
+                    onFieldBlur={(name) => {
+                      // Validar e remover erro do campo específico se estiver correto
+                      const fullValidation = validateAgriculturalPhase({
+                        ...agriculturalData,
+                      })
+                      if (!fullValidation[name]) {
+                        setAgriculturalErrors((prev) => {
+                          const newErrors = { ...prev }
+                          delete newErrors[name]
+                          return newErrors
+                        })
+                      } else {
+                        setAgriculturalErrors((prev) => ({
+                          ...prev,
+                          [name]: fullValidation[name],
+                        }))
+                      }
+                    }}
                   />
                 ),
                 onValidate: () => {
@@ -169,6 +205,24 @@ export function CalculatorContent() {
                     errors={industrialErrors}
                     onFieldChange={(name, value) => {
                       setIndustrialData((d) => ({ ...d, [name]: value }))
+                    }}
+                    onFieldBlur={(name) => {
+                      // Validar e remover erro do campo específico se estiver correto
+                      const fullValidation = validateIndustrialPhase({
+                        ...industrialData,
+                      })
+                      if (!fullValidation[name]) {
+                        setIndustrialErrors((prev) => {
+                          const newErrors = { ...prev }
+                          delete newErrors[name]
+                          return newErrors
+                        })
+                      } else {
+                        setIndustrialErrors((prev) => ({
+                          ...prev,
+                          [name]: fullValidation[name],
+                        }))
+                      }
                     }}
                     previousPhases={{
                       agricultural: agriculturalData,
@@ -191,6 +245,28 @@ export function CalculatorContent() {
                     errors={distributionErrors}
                     onFieldChange={(name, value) => {
                       setDistributionData((d) => ({ ...d, [name]: value }))
+                    }}
+                    onFieldBlur={(name) => {
+                      // Validar e remover erro do campo específico se estiver correto
+                      const fullValidation = validateDistributionPhase({
+                        ...distributionData,
+                      })
+                      if (!fullValidation[name]) {
+                        setDistributionErrors((prev) => {
+                          const newErrors = { ...prev }
+                          delete newErrors[name]
+                          return newErrors
+                        })
+                      } else {
+                        setDistributionErrors((prev) => ({
+                          ...prev,
+                          [name]: fullValidation[name],
+                        }))
+                      }
+                    }}
+                    previousPhases={{
+                      agricultural: agriculturalData,
+                      industrial: industrialData,
                     }}
                   />
                 ),

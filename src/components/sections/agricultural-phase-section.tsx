@@ -192,7 +192,9 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.biomassImpactFactor}
                   disabled
                 />
-                <FieldDescription>kg CO₂ eq. / kg biomassa</FieldDescription>
+                <span className="text-xs text-gray-500">
+                  kg CO₂ eq. / kg biomassa
+                </span>
                 <FieldError
                   errors={
                     errors.biomassImpactFactor
@@ -218,7 +220,9 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.biomassCalorificValue}
                   disabled
                 />
-                <FieldDescription>MJ / kg de biomassa</FieldDescription>
+                <span className="text-xs text-gray-500">
+                  MJ / kg de biomassa
+                </span>
                 <FieldError
                   errors={
                     errors.biomassCalorificValue
@@ -246,7 +250,9 @@ export function AgriculturalPhaseSection({
                   inputMode="decimal"
                   aria-invalid={!!errors.cornStarchInput}
                 />
-                <FieldDescription>kg / MJ de biocombustível</FieldDescription>
+                <span className="text-xs text-gray-500">
+                  kg / MJ de biocombustível
+                </span>
                 <FieldError
                   errors={
                     errors.cornStarchInput
@@ -272,7 +278,7 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.cornStarchImpact}
                   disabled
                 />
-                <FieldDescription>kg CO₂ eq / MJ</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂ eq / MJ</span>
                 <FieldError
                   errors={
                     errors.cornStarchImpact
@@ -299,9 +305,9 @@ export function AgriculturalPhaseSection({
                 aria-invalid={!!errors.biomassProductionImpact}
                 disabled
               />
-              <FieldDescription>
+              <span className="text-xs text-gray-500">
                 kg CO₂ eq. / MJ de biocombustível
-              </FieldDescription>
+              </span>
               <FieldError
                 errors={
                   errors.biomassProductionImpact
@@ -445,7 +451,9 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.mutImpactFactor}
                   disabled
                 />
-                <FieldDescription>kg CO₂ eq. / kg biomassa</FieldDescription>
+                <span className="text-xs text-gray-500">
+                  kg CO₂ eq. / kg biomassa
+                </span>
                 <FieldError
                   errors={
                     errors.mutImpactFactor
@@ -473,7 +481,7 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.mutAllocationPercent}
                   disabled
                 />
-                <FieldDescription>%</FieldDescription>
+                <span className="text-xs text-gray-500">%</span>
                 <FieldError
                   errors={
                     errors.mutAllocationPercent
@@ -497,9 +505,9 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.mutImpactResult}
                   disabled
                 />
-                <FieldDescription>
+                <span className="text-xs text-gray-500">
                   kg CO₂ eq. / MJ de biocombustível
-                </FieldDescription>
+                </span>
                 <FieldError
                   errors={
                     errors.mutImpactResult
@@ -601,7 +609,7 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.averageBiomassPerVehicleTon}
                   disabled
                 />
-                <FieldDescription>tonelada</FieldDescription>
+                <span className="text-xs text-gray-500">tonelada</span>
                 <FieldError
                   errors={
                     errors.averageBiomassPerVehicleTon
@@ -627,7 +635,7 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.transportDemandTkm}
                   disabled
                 />
-                <FieldDescription>t.km</FieldDescription>
+                <span className="text-xs text-gray-500">t.km</span>
                 <FieldError
                   errors={
                     errors.transportDemandTkm
@@ -655,9 +663,9 @@ export function AgriculturalPhaseSection({
                   aria-invalid={!!errors.transportImpactResult}
                   disabled
                 />
-                <FieldDescription>
+                <span className="text-xs text-gray-500">
                   kg CO₂ eq. / MJ de biocombustível
-                </FieldDescription>
+                </span>
                 <FieldError
                   errors={
                     errors.transportImpactResult

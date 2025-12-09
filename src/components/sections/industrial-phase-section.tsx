@@ -121,9 +121,9 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.processedBiomassKgPerYear}
                 />
                 <FieldDescription>
-                  kg/ano (não considerar a biomassa usada na co-geração, se
-                  houver)
+                  (não considerar a biomassa usada na co-geração, se houver)
                 </FieldDescription>
+                <span className="text-xs text-gray-500">kg/ano</span>
                 <FieldError
                   errors={
                     errors.processedBiomassKgPerYear
@@ -149,7 +149,7 @@ export function IndustrialPhaseSection({
                   inputMode="decimal"
                   aria-invalid={!!errors.biomassConsumedInCogenerationKgPerYear}
                 />
-                <FieldDescription>kg/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg/ano</span>
                 <FieldError
                   errors={
                     errors.biomassConsumedInCogenerationKgPerYear
@@ -184,14 +184,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="gridMixMediumVoltage"
                   name="gridMixMediumVoltage"
-                  placeholder="kWh/ano"
+                  placeholder="Ex.: 1.000,00"
                   value={data.gridMixMediumVoltage}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.gridMixMediumVoltage}
                 />
-                <FieldDescription>kWh/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kWh/ano</span>
                 <FieldError
                   errors={
                     errors.gridMixMediumVoltage
@@ -210,14 +210,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="gridMixHighVoltage"
                   name="gridMixHighVoltage"
-                  placeholder="kWh/ano"
+                  placeholder="Ex.: 1.000,00"
                   value={data.gridMixHighVoltage}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.gridMixHighVoltage}
                 />
-                <FieldDescription>kWh/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kWh/ano</span>
                 <FieldError
                   errors={
                     errors.gridMixHighVoltage
@@ -238,14 +238,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="electricityPCH"
                   name="electricityPCH"
-                  placeholder="kWh/ano"
+                  placeholder="Ex.: 1.000,00"
                   value={data.electricityPCH}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.electricityPCH}
                 />
-                <FieldDescription>kWh/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kWh/ano</span>
                 <FieldError
                   errors={
                     errors.electricityPCH
@@ -264,14 +264,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="electricityBiomass"
                   name="electricityBiomass"
-                  placeholder="kWh/ano"
+                  placeholder="Ex.: 1.000,00"
                   value={data.electricityBiomass}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.electricityBiomass}
                 />
-                <FieldDescription>kWh/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kWh/ano</span>
                 <FieldError
                   errors={
                     errors.electricityBiomass
@@ -292,14 +292,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="electricityDiesel"
                   name="electricityDiesel"
-                  placeholder="kWh/ano"
+                  placeholder="Ex.: 1.000,00"
                   value={data.electricityDiesel}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.electricityDiesel}
                 />
-                <FieldDescription>kWh/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kWh/ano</span>
                 <FieldError
                   errors={
                     errors.electricityDiesel
@@ -318,14 +318,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="electricitySolar"
                   name="electricitySolar"
-                  placeholder="kWh/ano"
+                  placeholder="Ex.: 1.000,00"
                   value={data.electricitySolar}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.electricitySolar}
                 />
-                <FieldDescription>kWh/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kWh/ano</span>
                 <FieldError
                   errors={
                     errors.electricitySolar
@@ -353,7 +353,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.electricityImpactFactorKgCO2PerKWh}
                   disabled
                 />
-                <FieldDescription>kg CO₂/ kWh</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂/ kWh</span>
                 <FieldError
                   errors={
                     errors.electricityImpactFactorKgCO2PerKWh
@@ -379,7 +379,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.electricityImpactResultKgCO2PerMJ}
                   disabled
                 />
-                <FieldDescription>kg CO₂/MJ</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂/MJ</span>
                 <FieldError
                   errors={
                     errors.electricityImpactResultKgCO2PerMJ
@@ -407,14 +407,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelDieselLitersPerYear"
                   name="fuelDieselLitersPerYear"
-                  placeholder="Litros/ano"
+                  placeholder="Ex.: 500,00"
                   value={data.fuelDieselLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelDieselLitersPerYear}
                 />
-                <FieldDescription>Litros/ano</FieldDescription>
+                <span className="text-xs text-gray-500">Litros/ano</span>
                 <FieldError
                   errors={
                     errors.fuelDieselLitersPerYear
@@ -433,14 +433,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelNaturalGasNm3PerYear"
                   name="fuelNaturalGasNm3PerYear"
-                  placeholder="Nm³/ano"
+                  placeholder="Ex.: 200,00"
                   value={data.fuelNaturalGasNm3PerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelNaturalGasNm3PerYear}
                 />
-                <FieldDescription>Nm³/ano</FieldDescription>
+                <span className="text-xs text-gray-500">Nm³/ano</span>
                 <FieldError
                   errors={
                     errors.fuelNaturalGasNm3PerYear
@@ -459,14 +459,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelLPGKgPerYear"
                   name="fuelLPGKgPerYear"
-                  placeholder="kg/ano"
+                  placeholder="Ex.: 100,00"
                   value={data.fuelLPGKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelLPGKgPerYear}
                 />
-                <FieldDescription>kg/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg/ano</span>
                 <FieldError
                   errors={
                     errors.fuelLPGKgPerYear
@@ -485,14 +485,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelGasolineALitersPerYear"
                   name="fuelGasolineALitersPerYear"
-                  placeholder="Litros/ano"
+                  placeholder="Ex.: 500,00"
                   value={data.fuelGasolineALitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelGasolineALitersPerYear}
                 />
-                <FieldDescription>Litros/ano</FieldDescription>
+                <span className="text-xs text-gray-500">Litros/ano</span>
                 <FieldError
                   errors={
                     errors.fuelGasolineALitersPerYear
@@ -513,14 +513,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelEthanolAnhydrousLitersPerYear"
                   name="fuelEthanolAnhydrousLitersPerYear"
-                  placeholder="Litros/ano"
+                  placeholder="Ex.: 500,00"
                   value={data.fuelEthanolAnhydrousLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelEthanolAnhydrousLitersPerYear}
                 />
-                <FieldDescription>Litros/ano</FieldDescription>
+                <span className="text-xs text-gray-500">Litros/ano</span>
                 <FieldError
                   errors={
                     errors.fuelEthanolAnhydrousLitersPerYear
@@ -539,14 +539,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelEthanolHydratedLitersPerYear"
                   name="fuelEthanolHydratedLitersPerYear"
-                  placeholder="Litros/ano"
+                  placeholder="Ex.: 500,00"
                   value={data.fuelEthanolHydratedLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelEthanolHydratedLitersPerYear}
                 />
-                <FieldDescription>Litros/ano</FieldDescription>
+                <span className="text-xs text-gray-500">Litros/ano</span>
                 <FieldError
                   errors={
                     errors.fuelEthanolHydratedLitersPerYear
@@ -567,14 +567,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelWoodChipsKgPerYear"
                   name="fuelWoodChipsKgPerYear"
-                  placeholder="kg/ano"
+                  placeholder="Ex.: 100,00"
                   value={data.fuelWoodChipsKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelWoodChipsKgPerYear}
                 />
-                <FieldDescription>kg/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg/ano</span>
                 <FieldError
                   errors={
                     errors.fuelWoodChipsKgPerYear
@@ -591,14 +591,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="fuelFirewoodKgPerYear"
                   name="fuelFirewoodKgPerYear"
-                  placeholder="kg/ano"
+                  placeholder="Ex.: 100,00"
                   value={data.fuelFirewoodKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.fuelFirewoodKgPerYear}
                 />
-                <FieldDescription>kg/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg/ano</span>
                 <FieldError
                   errors={
                     errors.fuelFirewoodKgPerYear
@@ -626,7 +626,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.fuelProductionImpactKgCO2PerYear}
                   disabled
                 />
-                <FieldDescription>kg CO₂/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂/ano</span>
                 <FieldError
                   errors={
                     errors.fuelProductionImpactKgCO2PerYear
@@ -654,7 +654,7 @@ export function IndustrialPhaseSection({
                   }
                   disabled
                 />
-                <FieldDescription>kg CO₂/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂/ano</span>
                 <FieldError
                   errors={
                     errors.fuelStationaryCombustionImpactKgCO2PerYear
@@ -687,7 +687,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.fuelConsumptionImpactKgCO2PerMJ}
                   disabled
                 />
-                <FieldDescription>kg CO₂/MJ</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂/MJ</span>
                 <FieldError
                   errors={
                     errors.fuelConsumptionImpactKgCO2PerMJ
@@ -717,18 +717,18 @@ export function IndustrialPhaseSection({
                 <Input
                   id="biomassCombustionEmissionFactorKgCO2PerKg"
                   name="biomassCombustionEmissionFactorKgCO2PerKg"
-                  placeholder="kg CO₂/ kg de biomassa queimada"
+                  placeholder="Preenchimento automático"
                   value={data.biomassCombustionEmissionFactorKgCO2PerKg}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  disabled
                   aria-invalid={
                     !!errors.biomassCombustionEmissionFactorKgCO2PerKg
                   }
                 />
-                <FieldDescription>
+                <span className="text-xs text-gray-500">
                   kg CO₂/ kg de biomassa queimada
-                </FieldDescription>
+                </span>
                 <FieldError
                   errors={
                     errors.biomassCombustionEmissionFactorKgCO2PerKg
@@ -761,7 +761,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.biomassCombustionImpactKgCO2PerYear}
                   disabled
                 />
-                <FieldDescription>kg CO₂/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂/ano</span>
                 <FieldError
                   errors={
                     errors.biomassCombustionImpactKgCO2PerYear
@@ -791,7 +791,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.biomassCombustionImpactKgCO2PerMJ}
                   disabled
                 />
-                <FieldDescription>kg CO₂/MJ</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂/MJ</span>
                 <FieldError
                   errors={
                     errors.biomassCombustionImpactKgCO2PerMJ
@@ -818,14 +818,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="waterLitersPerYear"
                   name="waterLitersPerYear"
-                  placeholder="litros/ano"
+                  placeholder="Ex.: 500,00"
                   value={data.waterLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.waterLitersPerYear}
                 />
-                <FieldDescription>litros/ano</FieldDescription>
+                <span className="text-xs text-gray-500">litros/ano</span>
                 <FieldError
                   errors={
                     errors.waterLitersPerYear
@@ -844,14 +844,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="lubricantOilKgPerYear"
                   name="lubricantOilKgPerYear"
-                  placeholder="kg/ano"
+                  placeholder="Ex.: 100,00"
                   value={data.lubricantOilKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.lubricantOilKgPerYear}
                 />
-                <FieldDescription>kg/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg/ano</span>
                 <FieldError
                   errors={
                     errors.lubricantOilKgPerYear
@@ -872,14 +872,14 @@ export function IndustrialPhaseSection({
                 <Input
                   id="silicaSandKgPerYear"
                   name="silicaSandKgPerYear"
-                  placeholder="kg/ano"
+                  placeholder="Ex.: 100,00"
                   value={data.silicaSandKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   inputMode="decimal"
                   aria-invalid={!!errors.silicaSandKgPerYear}
                 />
-                <FieldDescription>kg/ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg/ano</span>
                 <FieldError
                   errors={
                     errors.silicaSandKgPerYear
@@ -907,7 +907,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.manufacturingImpactKgCO2eqPerYear}
                   disabled
                 />
-                <FieldDescription>kg CO₂ eq./ano</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂ eq./ano</span>
                 <FieldError
                   errors={
                     errors.manufacturingImpactKgCO2eqPerYear
@@ -933,7 +933,7 @@ export function IndustrialPhaseSection({
                   aria-invalid={!!errors.manufacturingImpactKgCO2eqPerMJ}
                   disabled
                 />
-                <FieldDescription>kg CO₂ eq./ MJ</FieldDescription>
+                <span className="text-xs text-gray-500">kg CO₂ eq./ MJ</span>
                 <FieldError
                   errors={
                     errors.manufacturingImpactKgCO2eqPerMJ

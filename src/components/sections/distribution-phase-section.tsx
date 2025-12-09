@@ -2,6 +2,7 @@
 import {
   Field,
   FieldContent,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -11,6 +12,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { VEHICLE_TYPES } from "@/constants/transport"
+import { useDistributionAutofill } from "@/hooks/use-distribution-autofill"
 import type { FieldErrors } from "@/types/forms"
 import React from "react"
 import { FaShip, FaTruckMoving } from "react-icons/fa"
@@ -50,6 +52,10 @@ interface Props {
   errors: DistributionPhaseFieldErrors
   onFieldChange: (name: keyof DistributionPhaseFormData, value: string) => void
   onFieldBlur?: (name: keyof DistributionPhaseFormData) => void
+  previousPhases?: {
+    agricultural?: import("./agricultural-phase-section").AgriculturalPhaseFormData
+    industrial?: import("./industrial-phase-section").IndustrialPhaseFormData
+  }
 }
 
 export function DistributionPhaseSection({
@@ -57,6 +63,7 @@ export function DistributionPhaseSection({
   errors,
   onFieldChange,
   onFieldBlur,
+  previousPhases,
 }: Props) {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -71,6 +78,9 @@ export function DistributionPhaseSection({
     const { name } = e.target
     onFieldBlur?.(name as keyof DistributionPhaseFormData)
   }
+
+  // Hook para preenchimentos automáticos
+  useDistributionAutofill(data, onFieldChange, previousPhases)
 
   return (
     <section className="space-y-6">
@@ -96,7 +106,7 @@ export function DistributionPhaseSection({
                   value={data.domesticBiomassQuantityTon}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0,00"
+                  placeholder="Ex.: 1.000,00"
                   inputMode="decimal"
                   aria-invalid={!!errors.domesticBiomassQuantityTon}
                 />
@@ -122,7 +132,7 @@ export function DistributionPhaseSection({
                   value={data.domesticTransportDistanceKm}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0,00"
+                  placeholder="Ex.: 1.000,00"
                   inputMode="decimal"
                   aria-invalid={!!errors.domesticTransportDistanceKm}
                 />
@@ -146,7 +156,7 @@ export function DistributionPhaseSection({
                 className="flex items-center gap-2"
                 htmlFor="domesticRailPercent"
               >
-                Percentual via ferroviária *
+                Percentual da distância via ferroviária *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -155,7 +165,7 @@ export function DistributionPhaseSection({
                   value={data.domesticRailPercent}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0"
+                  placeholder="Ex.: 50"
                   inputMode="decimal"
                   aria-invalid={!!errors.domesticRailPercent}
                 />
@@ -175,7 +185,7 @@ export function DistributionPhaseSection({
                 className="flex items-center gap-2"
                 htmlFor="domesticWaterwayPercent"
               >
-                Percentual via hidroviária *
+                Percentual da distância via hidroviária *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -184,7 +194,7 @@ export function DistributionPhaseSection({
                   value={data.domesticWaterwayPercent}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0"
+                  placeholder="Ex.: 50"
                   inputMode="decimal"
                   aria-invalid={!!errors.domesticWaterwayPercent}
                 />
@@ -204,7 +214,7 @@ export function DistributionPhaseSection({
                 className="flex items-center gap-2"
                 htmlFor="domesticRoadPercent"
               >
-                Percentual via rodoviária *
+                Percentual da distância via rodoviária
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -213,8 +223,8 @@ export function DistributionPhaseSection({
                   value={data.domesticRoadPercent}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0"
-                  inputMode="decimal"
+                  placeholder="Preenchimento automático"
+                  disabled
                   aria-invalid={!!errors.domesticRoadPercent}
                 />
                 <FieldError
@@ -337,14 +347,12 @@ export function DistributionPhaseSection({
         </FieldGroup>
       </FieldSet>
 
-      {/* Exportação - via container marítimo */}
       <FieldSet>
         <FieldLegend className="flex items-center text-soil-800">
           <FaShip className="inline mr-2 size-5" /> Exportação - via container
           marítimo
         </FieldLegend>
         <FieldGroup className="flex gap-3">
-          {/* Quantity and factory→nearest hydro port distance */}
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="exportBiomassQuantityTon">
@@ -358,7 +366,7 @@ export function DistributionPhaseSection({
                   value={data.exportBiomassQuantityTon}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0,00"
+                  placeholder="Ex.: 1.000,00"
                   inputMode="decimal"
                   aria-invalid={!!errors.exportBiomassQuantityTon}
                 />
@@ -384,7 +392,7 @@ export function DistributionPhaseSection({
                   value={data.exportDistanceFactoryToNearestHydroPortKm}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0,00"
+                  placeholder="Ex.: 1.000,00"
                   inputMode="decimal"
                   aria-invalid={
                     !!errors.exportDistanceFactoryToNearestHydroPortKm
@@ -413,8 +421,7 @@ export function DistributionPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="exportRailPercentToPort">
-                Refere-se ao percentual da distância até o porto hidroviário
-                distribuído exclusivamente por via ferroviária
+                Percentual da distância via ferroviária (até o porto) *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -423,7 +430,7 @@ export function DistributionPhaseSection({
                   value={data.exportRailPercentToPort}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0"
+                  placeholder="Ex.: 50"
                   inputMode="decimal"
                   aria-invalid={!!errors.exportRailPercentToPort}
                 />
@@ -440,8 +447,7 @@ export function DistributionPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="exportWaterwayPercentToPort">
-                Refere-se ao percentual da distância até o porto hidroviário
-                distribuído exclusivamente por via hidroviária
+                Percentual da distância via hidroviária (até o porto) *
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -450,7 +456,7 @@ export function DistributionPhaseSection({
                   value={data.exportWaterwayPercentToPort}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0"
+                  placeholder="Ex.: 50"
                   inputMode="decimal"
                   aria-invalid={!!errors.exportWaterwayPercentToPort}
                 />
@@ -467,8 +473,7 @@ export function DistributionPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="exportRoadPercentToPort">
-                Refere-se ao percentual da distância até o porto hidroviário
-                distribuído exclusivamente por via rodoviária
+                Percentual da distância via rodoviária (até o porto)
               </FieldLabel>
               <FieldContent>
                 <Input
@@ -477,8 +482,8 @@ export function DistributionPhaseSection({
                   value={data.exportRoadPercentToPort}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="0"
-                  inputMode="decimal"
+                  placeholder="Preenchimento automático"
+                  disabled
                   aria-invalid={!!errors.exportRoadPercentToPort}
                 />
                 <FieldError
@@ -493,7 +498,6 @@ export function DistributionPhaseSection({
             </Field>
           </div>
 
-          {/* Vehicle type for road to port */}
           <Field>
             <FieldLabel htmlFor="exportRoadVehicleTypeToPort">
               Tipo de veículo usado no transporte rodoviário até o porto
@@ -540,10 +544,21 @@ export function DistributionPhaseSection({
                 value={data.exportDistancePortToForeignMarketKm}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder="0,00"
+                placeholder="Ex.: 1.000,00"
                 inputMode="decimal"
                 aria-invalid={!!errors.exportDistancePortToForeignMarketKm}
               />
+              <FieldDescription>
+                Consulta pode ser efetuada no site:{" "}
+                <a
+                  href="https://searates.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  searates.com
+                </a>
+              </FieldDescription>
               <FieldError
                 errors={
                   errors.exportDistancePortToForeignMarketKm
@@ -562,7 +577,6 @@ export function DistributionPhaseSection({
           <FieldSeparator className="md:col-span-2" />
         </FieldGroup>
 
-        {/* Outputs - 4 colunas lado a lado */}
         <FieldGroup className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Field>
             <FieldLabel className="min-h-10 flex items-center">

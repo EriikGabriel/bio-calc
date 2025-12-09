@@ -26,6 +26,14 @@ export function validateDistributionPhase(
     add("domesticTransportDistanceKm", "Informe a distância em km.")
   }
 
+  // Percentuais domésticos (ferroviário e hidroviário são obrigatórios)
+  if (isEmpty(data.domesticRailPercent)) {
+    add("domesticRailPercent", "Informe o percentual ferroviário.")
+  }
+  if (isEmpty(data.domesticWaterwayPercent)) {
+    add("domesticWaterwayPercent", "Informe o percentual hidroviário.")
+  }
+
   // Percentages constraints
   const rail = toNumber(data.domesticRailPercent)
   const water = toNumber(data.domesticWaterwayPercent)
@@ -75,6 +83,20 @@ export function validateDistributionPhase(
     add(
       "exportDistanceFactoryToNearestHydroPortKm",
       "Informe a distância até o porto hidroviário (km)."
+    )
+  }
+
+  // Percentuais de exportação até o porto (ferroviário e hidroviário são obrigatórios)
+  if (isEmpty(data.exportRailPercentToPort)) {
+    add(
+      "exportRailPercentToPort",
+      "Informe o percentual ferroviário até o porto."
+    )
+  }
+  if (isEmpty(data.exportWaterwayPercentToPort)) {
+    add(
+      "exportWaterwayPercentToPort",
+      "Informe o percentual hidroviário até o porto."
     )
   }
 
