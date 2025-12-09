@@ -26,7 +26,7 @@ export function validateIndustrialPhase(
     errors.biomassConsumedInCogenerationKgPerYear = "Valor numérico inválido"
   }
 
-  // Electricity inputs (optional but must be numeric if provided)
+  // Electricity inputs (OBRIGATÓRIOS)
   const electricityFields: Array<keyof IndustrialPhaseFormData> = [
     "gridMixMediumVoltage",
     "gridMixHighVoltage",
@@ -37,12 +37,14 @@ export function validateIndustrialPhase(
   ]
   for (const f of electricityFields) {
     const val = form[f] as string
-    if (!isEmpty(val) && !isValidNumber(val)) {
+    if (isEmpty(val)) {
+      errors[f] = "Campo obrigatório (informe 0 se não houver)"
+    } else if (!isValidNumber(val)) {
       errors[f] = "Valor numérico inválido"
     }
   }
 
-  // Fuel inputs (optional but must be numeric if provided)
+  // Fuel inputs (OBRIGATÓRIOS)
   const fuelFields: Array<keyof IndustrialPhaseFormData> = [
     "fuelDieselLitersPerYear",
     "fuelNaturalGasNm3PerYear",
@@ -55,7 +57,9 @@ export function validateIndustrialPhase(
   ]
   for (const f of fuelFields) {
     const val = form[f] as string
-    if (!isEmpty(val) && !isValidNumber(val)) {
+    if (isEmpty(val)) {
+      errors[f] = "Campo obrigatório (informe 0 se não houver)"
+    } else if (!isValidNumber(val)) {
       errors[f] = "Valor numérico inválido"
     }
   }
@@ -71,7 +75,7 @@ export function validateIndustrialPhase(
     errors.biomassCombustionEmissionFactorKgCO2PerKg = "Valor numérico inválido"
   }
 
-  // Manufacturing inputs: optional numeric
+  // Manufacturing inputs (OBRIGATÓRIOS)
   const manufacturingFields: Array<keyof IndustrialPhaseFormData> = [
     "waterLitersPerYear",
     "lubricantOilKgPerYear",
@@ -79,7 +83,9 @@ export function validateIndustrialPhase(
   ]
   for (const f of manufacturingFields) {
     const val = form[f] as string
-    if (!isEmpty(val) && !isValidNumber(val)) {
+    if (isEmpty(val)) {
+      errors[f] = "Campo obrigatório (informe 0 se não houver)"
+    } else if (!isValidNumber(val)) {
       errors[f] = "Valor numérico inválido"
     }
   }

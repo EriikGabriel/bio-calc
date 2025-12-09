@@ -10,7 +10,7 @@ import {
   FieldLegend,
   FieldSet,
 } from "@ui/field"
-import { Input } from "@ui/input"
+import { NumericInput } from "@ui/numeric-input"
 import { BsFillFuelPumpFill } from "react-icons/bs"
 import {
   MdEnergySavingsLeaf,
@@ -110,14 +110,15 @@ export function IndustrialPhaseSection({
                 Quantidade de biomassa processada *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="processedBiomassKgPerYear"
                   name="processedBiomassKgPerYear"
                   placeholder="Ex.: 12.000.000,00"
                   value={data.processedBiomassKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.processedBiomassKgPerYear}
                 />
                 <FieldDescription>
@@ -139,14 +140,15 @@ export function IndustrialPhaseSection({
                 Quantidade de biomassa consumida na co-geração
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="biomassConsumedInCogenerationKgPerYear"
                   name="biomassConsumedInCogenerationKgPerYear"
                   placeholder="Ex.: 0,00 (deixe vazio se não houver co-geração)"
                   value={data.biomassConsumedInCogenerationKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.biomassConsumedInCogenerationKgPerYear}
                 />
                 <span className="text-xs text-gray-500">kg/ano</span>
@@ -178,17 +180,18 @@ export function IndustrialPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="gridMixMediumVoltage">
-                Eletricidade da rede - mix média voltagem
+                Eletricidade da rede - mix média voltagem *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="gridMixMediumVoltage"
                   name="gridMixMediumVoltage"
                   placeholder="Ex.: 1.000,00"
                   value={data.gridMixMediumVoltage}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.gridMixMediumVoltage}
                 />
                 <span className="text-xs text-gray-500">kWh/ano</span>
@@ -204,17 +207,18 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="gridMixHighVoltage">
-                Eletricidade da rede - mix alta voltagem
+                Eletricidade da rede - mix alta voltagem *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="gridMixHighVoltage"
                   name="gridMixHighVoltage"
                   placeholder="Ex.: 1.000,00"
                   value={data.gridMixHighVoltage}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.gridMixHighVoltage}
                 />
                 <span className="text-xs text-gray-500">kWh/ano</span>
@@ -232,17 +236,18 @@ export function IndustrialPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="electricityPCH">
-                Eletricidade - PCH
+                Eletricidade - PCH *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="electricityPCH"
                   name="electricityPCH"
                   placeholder="Ex.: 1.000,00"
                   value={data.electricityPCH}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.electricityPCH}
                 />
                 <span className="text-xs text-gray-500">kWh/ano</span>
@@ -258,17 +263,18 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="electricityBiomass">
-                Eletricidade - biomassa
+                Eletricidade - biomassa *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="electricityBiomass"
                   name="electricityBiomass"
                   placeholder="Ex.: 1.000,00"
                   value={data.electricityBiomass}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.electricityBiomass}
                 />
                 <span className="text-xs text-gray-500">kWh/ano</span>
@@ -286,17 +292,18 @@ export function IndustrialPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="electricityDiesel">
-                Eletricidade - óleo diesel
+                Eletricidade - óleo diesel *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="electricityDiesel"
                   name="electricityDiesel"
                   placeholder="Ex.: 1.000,00"
                   value={data.electricityDiesel}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.electricityDiesel}
                 />
                 <span className="text-xs text-gray-500">kWh/ano</span>
@@ -312,17 +319,18 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="electricitySolar">
-                Eletricidade - solar
+                Eletricidade - solar *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="electricitySolar"
                   name="electricitySolar"
                   placeholder="Ex.: 1.000,00"
                   value={data.electricitySolar}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.electricitySolar}
                 />
                 <span className="text-xs text-gray-500">kWh/ano</span>
@@ -343,7 +351,7 @@ export function IndustrialPhaseSection({
                 Fator de impacto do consumo de eletricidade
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="electricityImpactFactorKgCO2PerKWh"
                   name="electricityImpactFactorKgCO2PerKWh"
                   placeholder="Preenchimento automático"
@@ -369,7 +377,7 @@ export function IndustrialPhaseSection({
                 Impacto do consumo de eletricidade
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="electricityImpactResultKgCO2PerMJ"
                   name="electricityImpactResultKgCO2PerMJ"
                   placeholder="Preenchimento automático"
@@ -402,16 +410,19 @@ export function IndustrialPhaseSection({
         <FieldGroup className="flex gap-3">
           <div className="flex gap-3">
             <Field>
-              <FieldLabel htmlFor="fuelDieselLitersPerYear">Diesel</FieldLabel>
+              <FieldLabel htmlFor="fuelDieselLitersPerYear">
+                Diesel *
+              </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelDieselLitersPerYear"
                   name="fuelDieselLitersPerYear"
                   placeholder="Ex.: 500,00"
                   value={data.fuelDieselLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelDieselLitersPerYear}
                 />
                 <span className="text-xs text-gray-500">Litros/ano</span>
@@ -427,17 +438,18 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="fuelNaturalGasNm3PerYear">
-                Gás natural
+                Gás natural *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelNaturalGasNm3PerYear"
                   name="fuelNaturalGasNm3PerYear"
                   placeholder="Ex.: 200,00"
                   value={data.fuelNaturalGasNm3PerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelNaturalGasNm3PerYear}
                 />
                 <span className="text-xs text-gray-500">Nm³/ano</span>
@@ -454,16 +466,17 @@ export function IndustrialPhaseSection({
 
           <div className="flex gap-3">
             <Field>
-              <FieldLabel htmlFor="fuelLPGKgPerYear">GLP</FieldLabel>
+              <FieldLabel htmlFor="fuelLPGKgPerYear">GLP *</FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelLPGKgPerYear"
                   name="fuelLPGKgPerYear"
                   placeholder="Ex.: 100,00"
                   value={data.fuelLPGKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelLPGKgPerYear}
                 />
                 <span className="text-xs text-gray-500">kg/ano</span>
@@ -479,17 +492,18 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="fuelGasolineALitersPerYear">
-                Gasolina A
+                Gasolina A *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelGasolineALitersPerYear"
                   name="fuelGasolineALitersPerYear"
                   placeholder="Ex.: 500,00"
                   value={data.fuelGasolineALitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelGasolineALitersPerYear}
                 />
                 <span className="text-xs text-gray-500">Litros/ano</span>
@@ -507,17 +521,18 @@ export function IndustrialPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="fuelEthanolAnhydrousLitersPerYear">
-                Etanol anidro
+                Etanol anidro *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelEthanolAnhydrousLitersPerYear"
                   name="fuelEthanolAnhydrousLitersPerYear"
                   placeholder="Ex.: 500,00"
                   value={data.fuelEthanolAnhydrousLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelEthanolAnhydrousLitersPerYear}
                 />
                 <span className="text-xs text-gray-500">Litros/ano</span>
@@ -533,17 +548,18 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="fuelEthanolHydratedLitersPerYear">
-                Etanol hidratado
+                Etanol hidratado *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelEthanolHydratedLitersPerYear"
                   name="fuelEthanolHydratedLitersPerYear"
                   placeholder="Ex.: 500,00"
                   value={data.fuelEthanolHydratedLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelEthanolHydratedLitersPerYear}
                 />
                 <span className="text-xs text-gray-500">Litros/ano</span>
@@ -561,17 +577,18 @@ export function IndustrialPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="fuelWoodChipsKgPerYear">
-                Cavaco de madeira
+                Cavaco de madeira *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelWoodChipsKgPerYear"
                   name="fuelWoodChipsKgPerYear"
                   placeholder="Ex.: 100,00"
                   value={data.fuelWoodChipsKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelWoodChipsKgPerYear}
                 />
                 <span className="text-xs text-gray-500">kg/ano</span>
@@ -586,16 +603,17 @@ export function IndustrialPhaseSection({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="fuelFirewoodKgPerYear">Lenha</FieldLabel>
+              <FieldLabel htmlFor="fuelFirewoodKgPerYear">Lenha *</FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelFirewoodKgPerYear"
                   name="fuelFirewoodKgPerYear"
                   placeholder="Ex.: 100,00"
                   value={data.fuelFirewoodKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.fuelFirewoodKgPerYear}
                 />
                 <span className="text-xs text-gray-500">kg/ano</span>
@@ -616,7 +634,7 @@ export function IndustrialPhaseSection({
                 Impacto da produção de combustível (preenchimento automático)
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelProductionImpactKgCO2PerYear"
                   name="fuelProductionImpactKgCO2PerYear"
                   placeholder="Preenchimento automático"
@@ -642,7 +660,7 @@ export function IndustrialPhaseSection({
                 Impacto da combustão estacionária (preenchimento automático)
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelStationaryCombustionImpactKgCO2PerYear"
                   name="fuelStationaryCombustionImpactKgCO2PerYear"
                   placeholder="Preenchimento automático"
@@ -677,7 +695,7 @@ export function IndustrialPhaseSection({
                 Impacto do consumo de combustível
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="fuelConsumptionImpactKgCO2PerMJ"
                   name="fuelConsumptionImpactKgCO2PerMJ"
                   placeholder="Preenchimento automático"
@@ -714,7 +732,7 @@ export function IndustrialPhaseSection({
                 Fator de emissão da combustão da biomassa
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="biomassCombustionEmissionFactorKgCO2PerKg"
                   name="biomassCombustionEmissionFactorKgCO2PerKg"
                   placeholder="Preenchimento automático"
@@ -751,7 +769,7 @@ export function IndustrialPhaseSection({
                 Impacto da combustão da biomassa (preenchimento automático)
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="biomassCombustionImpactKgCO2PerYear"
                   name="biomassCombustionImpactKgCO2PerYear"
                   placeholder="Preenchimento automático"
@@ -781,7 +799,7 @@ export function IndustrialPhaseSection({
                 Impacto da combustão da biomassa
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="biomassCombustionImpactKgCO2PerMJ"
                   name="biomassCombustionImpactKgCO2PerMJ"
                   placeholder="Preenchimento automático"
@@ -813,16 +831,17 @@ export function IndustrialPhaseSection({
         <FieldGroup className="flex gap-3">
           <div className="flex gap-3">
             <Field>
-              <FieldLabel htmlFor="waterLitersPerYear">Água</FieldLabel>
+              <FieldLabel htmlFor="waterLitersPerYear">Água *</FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="waterLitersPerYear"
                   name="waterLitersPerYear"
                   placeholder="Ex.: 500,00"
                   value={data.waterLitersPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.waterLitersPerYear}
                 />
                 <span className="text-xs text-gray-500">litros/ano</span>
@@ -838,17 +857,18 @@ export function IndustrialPhaseSection({
 
             <Field>
               <FieldLabel htmlFor="lubricantOilKgPerYear">
-                Óleo lubrificante
+                Óleo lubrificante *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="lubricantOilKgPerYear"
                   name="lubricantOilKgPerYear"
                   placeholder="Ex.: 100,00"
                   value={data.lubricantOilKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.lubricantOilKgPerYear}
                 />
                 <span className="text-xs text-gray-500">kg/ano</span>
@@ -866,17 +886,18 @@ export function IndustrialPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="silicaSandKgPerYear">
-                Areia de sílica
+                Areia de sílica *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="silicaSandKgPerYear"
                   name="silicaSandKgPerYear"
                   placeholder="Ex.: 100,00"
                   value={data.silicaSandKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.silicaSandKgPerYear}
                 />
                 <span className="text-xs text-gray-500">kg/ano</span>
@@ -897,7 +918,7 @@ export function IndustrialPhaseSection({
                 Impacto da fase industrial
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="manufacturingImpactKgCO2eqPerYear"
                   name="manufacturingImpactKgCO2eqPerYear"
                   placeholder="Preenchimento automático"
@@ -923,7 +944,7 @@ export function IndustrialPhaseSection({
                 Impacto da fase industrial
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="manufacturingImpactKgCO2eqPerMJ"
                   name="manufacturingImpactKgCO2eqPerMJ"
                   placeholder="Preenchimento automático"

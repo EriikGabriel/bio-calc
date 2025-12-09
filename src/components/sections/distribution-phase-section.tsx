@@ -11,6 +11,8 @@ import {
   FieldSet,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { NumericInput } from "@/components/ui/numeric-input"
+import { PercentageInput } from "@/components/ui/percentage-input"
 import { VEHICLE_TYPES } from "@/constants/transport"
 import { useDistributionAutofill } from "@/hooks/use-distribution-autofill"
 import type { FieldErrors } from "@/types/forms"
@@ -100,14 +102,15 @@ export function DistributionPhaseSection({
                 Quantidade de biomassa transportada no mercado doméstico *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="domesticBiomassQuantityTon"
                   name="domesticBiomassQuantityTon"
                   value={data.domesticBiomassQuantityTon}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 1.000,00"
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.domesticBiomassQuantityTon}
                 />
                 <FieldError
@@ -126,14 +129,15 @@ export function DistributionPhaseSection({
                 Distância de transporte até o mercado consumidor doméstico *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="domesticTransportDistanceKm"
                   name="domesticTransportDistanceKm"
                   value={data.domesticTransportDistanceKm}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 1.000,00"
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.domesticTransportDistanceKm}
                 />
                 <FieldError
@@ -159,14 +163,13 @@ export function DistributionPhaseSection({
                 Percentual da distância via ferroviária *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <PercentageInput
                   id="domesticRailPercent"
                   name="domesticRailPercent"
                   value={data.domesticRailPercent}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 50"
-                  inputMode="decimal"
                   aria-invalid={!!errors.domesticRailPercent}
                 />
                 <FieldError
@@ -188,14 +191,13 @@ export function DistributionPhaseSection({
                 Percentual da distância via hidroviária *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <PercentageInput
                   id="domesticWaterwayPercent"
                   name="domesticWaterwayPercent"
                   value={data.domesticWaterwayPercent}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 50"
-                  inputMode="decimal"
                   aria-invalid={!!errors.domesticWaterwayPercent}
                 />
                 <FieldError
@@ -217,7 +219,7 @@ export function DistributionPhaseSection({
                 Percentual da distância via rodoviária
               </FieldLabel>
               <FieldContent>
-                <Input
+                <PercentageInput
                   id="domesticRoadPercent"
                   name="domesticRoadPercent"
                   value={data.domesticRoadPercent}
@@ -282,7 +284,7 @@ export function DistributionPhaseSection({
               Impacto da distribuição no mercado doméstico
             </FieldLabel>
             <FieldContent>
-              <Input
+              <PercentageInput
                 value={data.domesticDistributionImpactKgCO2EqPerYear ?? 0}
                 disabled
               />
@@ -307,7 +309,10 @@ export function DistributionPhaseSection({
               MJ transportado anualmente
             </FieldLabel>
             <FieldContent>
-              <Input value={data.domesticMjTransportedPerYear ?? 0} disabled />
+              <PercentageInput
+                value={data.domesticMjTransportedPerYear ?? 0}
+                disabled
+              />
               <FieldError
                 errors={
                   errors.domesticMjTransportedPerYear
@@ -324,7 +329,7 @@ export function DistributionPhaseSection({
               Impacto da distribuição
             </FieldLabel>
             <FieldContent>
-              <Input
+              <PercentageInput
                 value={data.domesticImpactKgCO2EqPerMjTransported ?? 0}
                 disabled
               />
@@ -360,14 +365,15 @@ export function DistributionPhaseSection({
                 marítimo
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="exportBiomassQuantityTon"
                   name="exportBiomassQuantityTon"
                   value={data.exportBiomassQuantityTon}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 1.000,00"
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.exportBiomassQuantityTon}
                 />
                 <FieldError
@@ -386,14 +392,15 @@ export function DistributionPhaseSection({
                 Distância da fábrica ao porto hidroviário mais próximo
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="exportDistanceFactoryToNearestHydroPortKm"
                   name="exportDistanceFactoryToNearestHydroPortKm"
                   value={data.exportDistanceFactoryToNearestHydroPortKm}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 1.000,00"
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={
                     !!errors.exportDistanceFactoryToNearestHydroPortKm
                   }
@@ -424,14 +431,13 @@ export function DistributionPhaseSection({
                 Percentual da distância via ferroviária (até o porto) *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <PercentageInput
                   id="exportRailPercentToPort"
                   name="exportRailPercentToPort"
                   value={data.exportRailPercentToPort}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 50"
-                  inputMode="decimal"
                   aria-invalid={!!errors.exportRailPercentToPort}
                 />
                 <FieldError
@@ -450,14 +456,13 @@ export function DistributionPhaseSection({
                 Percentual da distância via hidroviária (até o porto) *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <PercentageInput
                   id="exportWaterwayPercentToPort"
                   name="exportWaterwayPercentToPort"
                   value={data.exportWaterwayPercentToPort}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="Ex.: 50"
-                  inputMode="decimal"
                   aria-invalid={!!errors.exportWaterwayPercentToPort}
                 />
                 <FieldError
@@ -476,7 +481,7 @@ export function DistributionPhaseSection({
                 Percentual da distância via rodoviária (até o porto)
               </FieldLabel>
               <FieldContent>
-                <Input
+                <PercentageInput
                   id="exportRoadPercentToPort"
                   name="exportRoadPercentToPort"
                   value={data.exportRoadPercentToPort}
@@ -538,14 +543,15 @@ export function DistributionPhaseSection({
               (externo)
             </FieldLabel>
             <FieldContent>
-              <Input
+              <NumericInput
                 id="exportDistancePortToForeignMarketKm"
                 name="exportDistancePortToForeignMarketKm"
                 value={data.exportDistancePortToForeignMarketKm}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Ex.: 1.000,00"
-                inputMode="decimal"
+                minValue={0}
+                maxDecimals={2}
                 aria-invalid={!!errors.exportDistancePortToForeignMarketKm}
               />
               <FieldDescription>

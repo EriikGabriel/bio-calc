@@ -15,6 +15,14 @@ export function validateAgriculturalPhase(
   // Campos obrigatórios básicos
   if (isEmpty(form.biomassType)) {
     errors.biomassType = "Selecione o tipo de biomassa"
+    // Se biomassa não foi selecionada, exigir seleção da etapa também
+    if (
+      isEmpty(form.woodResidueLifecycleStage) ||
+      form.woodResidueLifecycleStage === "Não aplica"
+    ) {
+      errors.woodResidueLifecycleStage =
+        "Selecione a etapa do ciclo de vida da madeira"
+    }
   }
 
   // Entrada de amido de milho é obrigatória

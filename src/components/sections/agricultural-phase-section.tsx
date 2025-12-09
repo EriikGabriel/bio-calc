@@ -1,3 +1,4 @@
+import { NumericInput } from "@/components/ui/numeric-input"
 import { useAgriculturalAutofill } from "@/hooks/use-agricultural-autofill"
 import { getDropdownOptions } from "@/services/calc-api"
 import { useLoadCombinedOnVisible } from "@/utils/visibility"
@@ -151,14 +152,15 @@ export function AgriculturalPhaseSection({
                 Entrada de biomassa — dado específico
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="biomassInputSpecific"
                   name="biomassInputSpecific"
-                  placeholder="Ex.: 1.25"
+                  placeholder="Ex.: 1,25"
                   value={data.biomassInputSpecific}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.biomassInputSpecific}
                 />
                 <FieldDescription>
@@ -240,14 +242,15 @@ export function AgriculturalPhaseSection({
                 Entrada de amido de milho *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="cornStarchInput"
                   name="cornStarchInput"
-                  placeholder="Ex.: 0.10"
+                  placeholder="Ex.: 0,10"
                   value={data.cornStarchInput}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.cornStarchInput}
                 />
                 <span className="text-xs text-gray-500">
@@ -396,7 +399,9 @@ export function AgriculturalPhaseSection({
             <Field>
               <FieldLabel htmlFor="woodResidueLifecycleStage">
                 Etapa do ciclo de vida da madeira de onde os resíduos foram
-                obtidos *
+                obtidos
+                {/^Resíduo de (Pinus|Eucaliptus)$/i.test(data.biomassType) &&
+                  " *"}
               </FieldLabel>
               <FieldContent>
                 <select
@@ -534,17 +539,18 @@ export function AgriculturalPhaseSection({
                 Distância de transporte da biomassa até a fábrica *
               </FieldLabel>
               <FieldContent>
-                <Input
+                <NumericInput
                   id="transportDistanceKm"
                   name="transportDistanceKm"
                   placeholder="Ex.: 100,00"
                   value={data.transportDistanceKm}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
+                  minValue={0}
+                  maxDecimals={2}
                   aria-invalid={!!errors.transportDistanceKm}
                 />
-                <FieldDescription>km</FieldDescription>
+                <span className="text-xs text-gray-500">km</span>
                 <FieldError
                   errors={
                     errors.transportDistanceKm

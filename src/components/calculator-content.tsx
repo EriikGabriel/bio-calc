@@ -1,6 +1,7 @@
 import { FormWizard } from "@/components/form-wizard"
 import type { FieldErrors } from "@/types/forms"
 import { buildFullPayload, buildPayloadForStep } from "@/utils/payload-builders"
+import { isEmpty } from "@/utils/validations/common"
 import { validateDistributionPhase } from "@/utils/validations/distribution-phase-validation"
 import { validateIndustrialPhase } from "@/utils/validations/industrial-phase-validation"
 import {
@@ -174,6 +175,26 @@ export function CalculatorContent() {
                       const fullValidation = validateAgriculturalPhase({
                         ...agriculturalData,
                       })
+
+                      // Se o campo biomassType mudou, verificar se deve remover erro de woodResidueLifecycleStage
+                      if (name === "biomassType") {
+                        const isWoodResidue =
+                          /^Resíduo de (Pinus|Eucaliptus)$/i.test(
+                            agriculturalData.biomassType
+                          )
+                        // Se não for resíduo de madeira, remover erro de woodResidueLifecycleStage
+                        if (
+                          !isWoodResidue &&
+                          !isEmpty(agriculturalData.biomassType)
+                        ) {
+                          setAgriculturalErrors((prev) => {
+                            const newErrors = { ...prev }
+                            delete newErrors.woodResidueLifecycleStage
+                            return newErrors
+                          })
+                        }
+                      }
+
                       if (!fullValidation[name]) {
                         setAgriculturalErrors((prev) => {
                           const newErrors = { ...prev }
