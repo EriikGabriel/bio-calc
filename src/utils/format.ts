@@ -36,3 +36,7 @@ export function formatPhoneBR(value: string): string {
 
   return out
 }
+
+export function formatNumber(value: number, decimals: number = 2): string {
+  return value.toFixed(decimals)
+}
