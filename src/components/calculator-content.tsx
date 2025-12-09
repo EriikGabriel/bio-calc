@@ -16,7 +16,7 @@ import { validateAgriculturalPhase } from "@utils/validations/agricultural-phase
 import { validateCompanyInfo } from "@utils/validations/company-info-validation"
 import { BarChart3, Calculator } from "lucide-react"
 import { useState } from "react"
-import { ResultsSection } from "./results-section"
+import { ResultsWithExport } from "./results-with-export"
 import type {
   AgriculturalPhaseFieldErrors,
   AgriculturalPhaseFormData,
@@ -328,7 +328,7 @@ export function CalculatorContent({
               </p>
             </div>
           </div>
-          <ResultsSection
+          <ResultsWithExport
             result={calculationResult}
             companyName={companyInfo.companyName}
             biomassType={agriculturalData.biomassType}

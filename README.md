@@ -1,4 +1,8 @@
-# Run project on local
+# Bio-Calc - Análise de Ciclo de Vida de Biocombustíveis
+
+Sistema para cálculo e análise do ciclo de vida de biocombustíveis, aplicando a metodologia Circular Footprint Formula (CFF) e calculando créditos de carbono (CBIOs).
+
+## 🚀 Run project on local
 
 ```bash
 npm install
@@ -7,6 +11,65 @@ npm install
 ```bash
 npm run dev
 ```
+
+## 📄 Exportação de Resultados em PDF
+
+O sistema inclui funcionalidade de exportação dos resultados da análise em formato PDF profissional.
+
+### Características da Exportação
+
+- **Botão flutuante**: Disponível na aba de resultados quando há dados calculados
+- **PDF personalizado**: Inclui cabeçalho com logo e informações da empresa
+- **Paginação automática**: Divide o conteúdo em múltiplas páginas quando necessário
+- **Rodapé informativo**: Numeração de páginas e identificação do sistema
+- **Alta qualidade**: Renderização em escala 2x para melhor legibilidade
+- **Nome automático**: Arquivo gerado com data no formato `relatorio-ciclo-vida-biocombustivel-YYYY-MM-DD.pdf`
+
+### Como Usar
+
+1. Preencha todas as etapas do formulário (Informações da Empresa, Fase Agrícola, Fase Industrial, Fase de Distribuição)
+2. Clique em "Calcular" para gerar os resultados
+3. Na aba "Resultados", clique no botão "Exportar Resultados em PDF" no canto superior direito
+4. Aguarde a geração (indicada pelo spinner de carregamento)
+5. O PDF será automaticamente baixado para sua pasta de downloads
+
+### Conteúdo do PDF
+
+O PDF exportado inclui todos os componentes visíveis na aba de resultados:
+
+- ✅ Métricas principais (Intensidade de Carbono, Redução vs Diesel, Impacto Total)
+- ✅ Cards detalhados por fase (Agrícola, Industrial, Distribuição)
+- ✅ Classificação Energético-Ambiental (Nota A+ a E)
+- ✅ Gráficos de contribuição das etapas
+- ✅ Gráfico de redução de emissões comparativa
+- ✅ Score de sustentabilidade
+- ✅ Análise de distribuição do impacto
+- ✅ Resumo comparativo de reduções
+- ✅ Detalhamento da fase agrícola
+- ✅ Detalhamento da fase industrial
+- ✅ Comparação com combustíveis fósseis
+- ✅ Tabela de resultados detalhados
+- ✅ Classificação energético-ambiental expandida
+- ✅ Análise de créditos de carbono (CBIOs)
+- ✅ Insights e oportunidades de melhoria
+- ✅ Tabela final com aplicação da CFF
+
+### Componentes Técnicos
+
+**Bibliotecas utilizadas:**
+
+- `jspdf`: Geração de documentos PDF
+- `html2canvas`: Captura de elementos HTML como imagem
+
+**Componentes criados:**
+
+- `ExportPDFButton`: Botão de exportação com loading state
+- `ResultsWithExport`: Wrapper que integra resultados com botão de exportação
+
+**Localização dos arquivos:**
+
+- `/src/components/export-pdf-button.tsx`
+- `/src/components/results-with-export.tsx`
 
 # React + TypeScript + Vite
 
@@ -102,7 +165,244 @@ Você pode usar uma chamada HTTP (por exemplo, com `curl` ou uma ferramenta como
 ### Contrato de entrada/saída (resumo)
 
 - Entrada: `{ agricultural?: object, industrial?: object, distribution?: object }` com campos numéricos aceitando vírgula como separador decimal.
-- Saída: métricas por fase: - `agricultural`: impactos por MJ (`biomassImpactPerMJ`, `cornStarchImpactPerMJ`, `mutImpactPerMJ`, `transportImpactPerMJ`, `totalImpactPerMJ`) e `transportDemandTkm`. - `industrial`: impactos anuais (`electricityImpactYear`, `fuelImpactYear`, `manufacturingImpactYear`, `totalImpactYear`) e `impactPerMJ`. - `distribution`: impactos anuais doméstico e exportação e `totalImpactYear`.
+- Saída: métricas por fase:
+  - `agricultural`: impactos por MJ (`biomassImpactPerMJ`, `cornStarchImpactPerMJ`, `mutImpactPerMJ`, `transportImpactPerMJ`, `totalImpactPerMJ`) e `transportDemandTkm`.
+  - `industrial`: impactos anuais (`electricityImpactYear`, `fuelImpactYear`, `manufacturingImpactYear`, `totalImpactYear`) e `impactPerMJ`.
+  - `distribution`: impactos anuais doméstico e exportação e `totalImpactYear`.
+
+## 📊 Aba de Resultados - Explicação dos Cálculos
+
+A aba de resultados apresenta uma análise completa do ciclo de vida do biocombustível, aplicando a **Circular Footprint Formula (CFF)** e calculando métricas ambientais e econômicas. Abaixo está a explicação detalhada de cada componente.
+
+### 1. Métricas Principais
+
+#### Intensidade de Carbono
+
+```
+Intensidade de Carbono (kg CO₂eq/MJ) = Total de emissões de CO₂ / Energia produzida
+```
+
+Representa a quantidade de CO₂ equivalente emitida para produzir 1 MJ de energia do biocombustível, considerando todo o ciclo de vida (agrícola + industrial + distribuição).
+
+#### Redução vs Diesel
+
+```
+Redução (%) = ((Intensidade Diesel - Intensidade Biocombustível) / Intensidade Diesel) × 100
+```
+
+- **Diesel A**: 0.0867 kg CO₂eq/MJ (benchmark)
+- Mostra o percentual de redução de emissões em relação ao combustível fóssil
+
+#### Impacto Total Anual
+
+```
+Impacto Total Anual = Impacto Industrial Anual + Impacto Distribuição Anual
+```
+
+Soma das emissões anuais das fases industrial e de distribuição em kg CO₂eq/ano.
+
+### 2. Contribuição das Etapas do Ciclo de Vida
+
+#### Fase Agrícola
+
+```
+Total Agrícola = Biomassa + Amido + MUT + Transporte
+```
+
+- **Biomassa**: Impacto da produção da matéria-prima
+- **Amido de Milho**: Impacto dos insumos complementares
+- **MUT (Mudança de Uso da Terra)**: Alocação percentual configurável
+- **Transporte**: Impacto do transporte da biomassa
+
+#### Fase Industrial
+
+```
+Total Industrial = Eletricidade + Combustível + Manufatura
+```
+
+- **Eletricidade**: Consumo energético da planta industrial
+- **Combustível**: Diesel/combustível usado no processamento
+- **Manufatura**: Impacto da infraestrutura e equipamentos
+
+#### Fase de Distribuição
+
+```
+Total Distribuição = Doméstico + Exportação (Fábrica→Porto) + Exportação (Porto→Mercado)
+```
+
+### 3. Gráficos Disponíveis
+
+#### Gráfico de Pizza - Contribuição das Etapas
+
+Mostra a proporção de cada fase no impacto total:
+
+```
+Contribuição (%) = (Impacto da Fase / Impacto Total) × 100
+```
+
+**Cores utilizadas:**
+
+- 🟢 Agrícola: `#5e8c61` (forest-600)
+- 🔵 Industrial: `#72bda3` (sage-500)
+- 🟡 Distribuição: `#b0c5af` (herb-300)
+
+#### Gráfico de Redução de Emissões
+
+Compara a redução percentual do biocombustível em relação a três combustíveis fósseis:
+
+```
+Redução vs Diesel A = ((0.0867 - Intensidade Bio) / 0.0867) × 100
+Redução vs Óleo Pesado = ((0.094 - Intensidade Bio) / 0.094) × 100
+Redução vs Coque = ((0.120 - Intensidade Bio) / 0.120) × 100
+```
+
+#### Gráfico de Barras Empilhadas
+
+Visualiza a composição do impacto total, empilhando as contribuições das três fases.
+
+#### Score de Sustentabilidade (Circular)
+
+```
+Score (%) = min(100, Redução vs Diesel)
+```
+
+Limitado a 100% para representação visual, mas o valor real pode ultrapassar.
+
+### 4. Classificação Energético-Ambiental
+
+Sistema de notas baseado na redução de emissões:
+
+| Nota | Redução de Emissões | Cor          |
+| ---- | ------------------- | ------------ |
+| A+   | ≥ 400%              | Verde Escuro |
+| A    | 350-399%            | Verde        |
+| B    | 300-349%            | Verde Claro  |
+| C    | 250-299%            | Amarelo      |
+| D    | 200-249%            | Laranja      |
+| E    | < 200%              | Vermelho     |
+
+### 5. Créditos de Carbono (CBIOs)
+
+#### Elegibilidade
+
+```
+Elegível se: Redução ≥ 50% (requisito mínimo do RenovaBio)
+```
+
+#### Cálculo de CBIOs
+
+```
+CBIOs = (Nota de Eficiência / 100) × Produção Anual (ton) × Fator de Conversão
+```
+
+**Fatores de Conversão:**
+
+- Diesel A / Óleo Pesado: `0.456`
+- Coque de Petróleo: `0.457`
+
+#### Receita Potencial
+
+```
+Receita Anual = CBIOs Estimados × Valor Unitário (R$ 80/CBIO)
+```
+
+**Exemplo de cálculo** (produção de 10.000 ton/ano com 400% de redução):
+
+```
+CBIOs Diesel = (400 / 100) × 10.000 × 0.456 = 18.240 CBIOs
+Receita = 18.240 × R$ 80 = R$ 1.459.200/ano
+```
+
+### 6. Tabela Final - Circular Footprint Formula (CFF)
+
+#### Intensidade de Carbono do Biocombustível
+
+Valor calculado aplicando a metodologia CFF, que considera:
+
+- Emissões diretas e indiretas do ciclo de vida
+- Alocação de coprodutos
+- Créditos por circularidade (quando aplicável)
+
+#### Comparação com Combustíveis Fósseis Equivalentes
+
+**Valores de referência:**
+
+- **Diesel A, Gasolina A e GNV** (Média ponderada): `0.087 kg CO₂eq/MJ`
+- **Óleo combustível pesado**: `0.094 kg CO₂eq/MJ`
+- **Coque de Petróleo**: `0.120 kg CO₂eq/MJ`
+
+#### Nota de Eficiência Energético-Ambiental
+
+```
+Nota = ((Intensidade Fóssil - Intensidade Bio) / Intensidade Fóssil) × 100
+```
+
+Esta nota representa quantas vezes o biocombustível é mais eficiente que o fóssil. Valores acima de 100% indicam que o biocombustível emite muito menos que o fóssil.
+
+#### Redução de Emissões
+
+```
+Redução (%) = Nota de Eficiência × 100
+```
+
+Expressa a redução percentual em formato expandido (ex: 28.006,81% significa redução de 280 vezes).
+
+### 7. Resumo Executivo Final
+
+#### Média de Redução
+
+```
+Média = (Redução Diesel + Redução Óleo + Redução Coque) / 3
+```
+
+#### CBIOs Médios Estimados
+
+```
+CBIOs Médios = (CBIOs Diesel + CBIOs Óleo + CBIOs Coque) / 3
+```
+
+#### Receita Potencial Média
+
+```
+Receita = CBIOs Médios × R$ 80
+```
+
+### 8. Insights e Oportunidades
+
+O sistema analisa automaticamente os resultados e fornece insights baseados em thresholds:
+
+#### Pontos Fortes (identificados quando):
+
+- Redução > 300% → "Excelente desempenho ambiental"
+- Fase Agrícola < 30% do total → "Fase agrícola otimizada"
+- Fase Industrial < 50% do total → "Processo industrial eficiente"
+- Elegível para CBIOs
+
+#### Oportunidades de Melhoria (identificadas quando):
+
+- Fase Agrícola > 50% do total → "Otimizar práticas agrícolas"
+- Fase Industrial > 50% do total → "Investir em eficiência energética"
+- Fase Distribuição > 20% do total → "Otimizar logística"
+- Sempre sugerido: "Considerar certificação ISO 14064"
+
+### 9. Considerações Importantes
+
+1. **Fatores de Emissão**: Os cálculos utilizam fatores de emissão baseados em dados do IPCC e inventários nacionais.
+
+2. **Produção de Referência**: Os cálculos de CBIOs consideram uma usina de médio porte com produção anual de 10.000 toneladas.
+
+3. **Valor do CBIO**: O valor de R$ 80/CBIO é uma estimativa. O valor real varia conforme o mercado.
+
+4. **Certificação Oficial**: Para certificação oficial de CBIOs e participação no programa RenovaBio, é necessário seguir os procedimentos da ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis).
+
+5. **Atualização de Dados**: Os valores de referência dos combustíveis fósseis devem ser periodicamente atualizados conforme as diretrizes nacionais e internacionais.
+
+### 10. Referências Metodológicas
+
+- **CFF (Circular Footprint Formula)**: Metodologia da Comissão Europeia para avaliação de ciclo de vida de produtos circulares
+- **RenovaBio**: Programa brasileiro de incentivo aos biocombustíveis (Lei 13.576/2017)
+- **IPCC Guidelines**: Diretrizes do Painel Intergovernamental sobre Mudanças Climáticas
+- **ISO 14064**: Norma internacional para quantificação e reporte de emissões de GEE
 
         // Remove tseslint.configs.recommended and replace with this
         tseslint.configs.recommendedTypeChecked,

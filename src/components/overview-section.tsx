@@ -78,7 +78,7 @@ export function OverviewSection() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-forest-700 text-white flex items-center justify-center font-bold">
+              <div className=" w-8 h-8 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold">
                 1
               </div>
               <div>
@@ -93,7 +93,7 @@ export function OverviewSection() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-forest-700 text-white flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold">
                 2
               </div>
               <div>
@@ -106,7 +106,7 @@ export function OverviewSection() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-forest-700 text-white flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold">
                 3
               </div>
               <div>
@@ -121,7 +121,7 @@ export function OverviewSection() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-forest-700 text-white flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold">
                 4
               </div>
               <div>
@@ -134,7 +134,7 @@ export function OverviewSection() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
                 <TrendingDown className="h-5 w-5" />
               </div>
               <div>
