@@ -6,6 +6,10 @@ import { isEmpty, isValidEmail } from "./common"
 
 export function validateCompanyInfo(form: CompanyFormData): CompanyFieldErrors {
   const errors: CompanyFieldErrors = {}
+
+  // Debug: ver os valores do formulário
+  console.debug("Validando formulário de empresa:", form)
+
   const cnpjClean = form.taxId.replace(/\D/g, "")
 
   if (isEmpty(form.companyName)) {
@@ -37,6 +41,9 @@ export function validateCompanyInfo(form: CompanyFormData): CompanyFieldErrors {
   } else if (!isValidEmail(form.email)) {
     errors.email = "E-mail inválido"
   }
+
+  // Debug: mostrar erros encontrados
+  console.debug("Erros de validação:", errors)
 
   return errors
 }

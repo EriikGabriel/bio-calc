@@ -1,3 +1,4 @@
+import { useIndustrialAutofill } from "@/hooks/use-industrial-autofill"
 import type { FieldErrors } from "@/types/forms"
 import {
   Field,
@@ -20,7 +21,6 @@ import {
 
 export interface IndustrialPhaseFormData {
   // Dados do sistema
-  hasCogeneration: "Sim" | "Não" | ""
   processedBiomassKgPerYear: string
   biomassConsumedInCogenerationKgPerYear: string
   // Energia - Eletricidade (kWh/ano, unless noted)
@@ -63,11 +63,15 @@ export function IndustrialPhaseSection({
   errors,
   onFieldChange,
   onFieldBlur,
+  previousPhases,
 }: {
   data: IndustrialPhaseFormData
   errors: IndustrialPhaseFieldErrors
   onFieldChange: (name: keyof IndustrialPhaseFormData, value: string) => void
   onFieldBlur?: (name: keyof IndustrialPhaseFormData) => void
+  previousPhases?: {
+    agricultural?: import("./agricultural-phase-section").AgriculturalPhaseFormData
+  }
 }) {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -81,6 +85,9 @@ export function IndustrialPhaseSection({
     const { name } = e.target
     onFieldBlur?.(name as keyof IndustrialPhaseFormData)
   }
+
+  // Hook para preenchimentos automáticos
+  useIndustrialAutofill(data, onFieldChange, previousPhases)
 
   return (
     <section className="space-y-6">
@@ -99,40 +106,6 @@ export function IndustrialPhaseSection({
         <FieldGroup className="flex gap-3">
           <div className="flex gap-3">
             <Field>
-              <FieldLabel htmlFor="hasCogeneration">
-                Existe co-geração de energia (aproveitamento da biomassa na
-                geração de energia) *
-              </FieldLabel>
-              <FieldContent>
-                <select
-                  id="hasCogeneration"
-                  name="hasCogeneration"
-                  value={data.hasCogeneration}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.hasCogeneration}
-                  className="h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-                >
-                  <option value="" disabled>
-                    Selecionar na lista suspensa
-                  </option>
-                  <option value="Não">Não</option>
-                  <option value="Sim">Sim</option>
-                </select>
-                <FieldDescription>
-                  (não considerar a biomassa usada na co-geração, se houver)
-                </FieldDescription>
-                <FieldError
-                  errors={
-                    errors.hasCogeneration
-                      ? [{ message: errors.hasCogeneration }]
-                      : []
-                  }
-                />
-              </FieldContent>
-            </Field>
-
-            <Field>
               <FieldLabel htmlFor="processedBiomassKgPerYear">
                 Quantidade de biomassa processada *
               </FieldLabel>
@@ -147,7 +120,10 @@ export function IndustrialPhaseSection({
                   inputMode="decimal"
                   aria-invalid={!!errors.processedBiomassKgPerYear}
                 />
-                <FieldDescription>kg/ano</FieldDescription>
+                <FieldDescription>
+                  kg/ano (não considerar a biomassa usada na co-geração, se
+                  houver)
+                </FieldDescription>
                 <FieldError
                   errors={
                     errors.processedBiomassKgPerYear
@@ -157,9 +133,7 @@ export function IndustrialPhaseSection({
                 />
               </FieldContent>
             </Field>
-          </div>
 
-          <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="biomassConsumedInCogenerationKgPerYear">
                 Quantidade de biomassa consumida na co-geração
@@ -168,7 +142,7 @@ export function IndustrialPhaseSection({
                 <Input
                   id="biomassConsumedInCogenerationKgPerYear"
                   name="biomassConsumedInCogenerationKgPerYear"
-                  placeholder="Ex.: 0,00"
+                  placeholder="Ex.: 0,00 (deixe vazio se não houver co-geração)"
                   value={data.biomassConsumedInCogenerationKgPerYear}
                   onChange={handleChange}
                   onBlur={handleBlur}

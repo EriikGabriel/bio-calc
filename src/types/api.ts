@@ -2,7 +2,6 @@
 
 export type AgriculturalInput = {
   biomassType?: string
-  hasConsumptionInfo?: "yes" | "no" | ""
   biomassInputSpecific?: string
   biomassImpactFactor?: string
   biomassCalorificValue?: string

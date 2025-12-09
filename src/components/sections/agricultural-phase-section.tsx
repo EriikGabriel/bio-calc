@@ -21,7 +21,6 @@ import { PiFarmFill } from "react-icons/pi"
 
 export interface AgriculturalPhaseFormData {
   biomassType: string
-  hasConsumptionInfo: "yes" | "no" | ""
   biomassInputSpecific: string
   biomassImpactFactor: string // auto
   biomassCalorificValue: string // auto
@@ -401,7 +400,8 @@ export function AgriculturalPhaseSection({
                   onChange={handleChange}
                   onBlur={handleBlur}
                   aria-invalid={!!errors.woodResidueLifecycleStage}
-                  className={`h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:ring-[3px] ${
+                  disabled={data.woodResidueLifecycleStage === "Não aplica"}
+                  className={`h-9 w-full rounded-md border bg-white px-3 py-1 text-sm focus-visible:ring-[3px] disabled:opacity-50 disabled:cursor-not-allowed ${
                     errors.woodResidueLifecycleStage
                       ? "border-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/50"
                       : "focus-visible:border-ring focus-visible:ring-ring/50"
@@ -410,6 +410,10 @@ export function AgriculturalPhaseSection({
                   <option value="" disabled>
                     Selecionar na lista suspensa
                   </option>
+                  {data.biomassType &&
+                    !/^Resíduo de (Pinus|Eucaliptus)$/i.test(
+                      data.biomassType
+                    ) && <option value="Não aplica">Não aplica</option>}
                   {woodResidueOptions.map((s) => (
                     <option key={s} value={s}>
                       {s}
@@ -456,18 +460,18 @@ export function AgriculturalPhaseSection({
           <div className="flex gap-3">
             <Field>
               <FieldLabel htmlFor="mutAllocationPercent">
-                Percentual de alocação da biomassa *
+                Percentual de alocação da biomassa
               </FieldLabel>
               <FieldContent>
                 <Input
                   id="mutAllocationPercent"
                   name="mutAllocationPercent"
-                  placeholder="Ex.: 32,50"
+                  placeholder="Preenchimento automático"
                   value={data.mutAllocationPercent}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  inputMode="decimal"
                   aria-invalid={!!errors.mutAllocationPercent}
+                  disabled
                 />
                 <FieldDescription>%</FieldDescription>
                 <FieldError

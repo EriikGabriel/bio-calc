@@ -262,77 +262,78 @@ export function DistributionPhaseSection({
             </FieldContent>
           </Field>
 
-          <FieldSeparator />
+          <FieldSeparator className="md:col-span-2" />
+        </FieldGroup>
 
-          <div className="flex gap-3">
-            <Field>
-              <FieldLabel>
-                Impacto da distribuição no mercado doméstico
-              </FieldLabel>
-              <FieldContent>
-                <Input
-                  value={data.domesticDistributionImpactKgCO2EqPerYear ?? 0}
-                  disabled
-                />
-                <FieldError
-                  errors={
-                    errors.domesticDistributionImpactKgCO2EqPerYear
-                      ? [
-                          {
-                            message:
-                              errors.domesticDistributionImpactKgCO2EqPerYear,
-                          },
-                        ]
-                      : []
-                  }
-                />
-                <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
-              </FieldContent>
-            </Field>
+        {/* Outputs doméstico - 3 colunas lado a lado */}
+        <FieldGroup className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Field>
+            <FieldLabel className="min-h-10 flex items-center">
+              Impacto da distribuição no mercado doméstico
+            </FieldLabel>
+            <FieldContent>
+              <Input
+                value={data.domesticDistributionImpactKgCO2EqPerYear ?? 0}
+                disabled
+              />
+              <FieldError
+                errors={
+                  errors.domesticDistributionImpactKgCO2EqPerYear
+                    ? [
+                        {
+                          message:
+                            errors.domesticDistributionImpactKgCO2EqPerYear,
+                        },
+                      ]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
+            </FieldContent>
+          </Field>
 
-            <Field>
-              <FieldLabel>MJ transportado anualmente</FieldLabel>
-              <FieldContent>
-                <Input
-                  value={data.domesticMjTransportedPerYear ?? 0}
-                  disabled
-                />
-                <FieldError
-                  errors={
-                    errors.domesticMjTransportedPerYear
-                      ? [{ message: errors.domesticMjTransportedPerYear }]
-                      : []
-                  }
-                />
-                <span className="text-xs text-gray-500">MJ/ano</span>
-              </FieldContent>
-            </Field>
+          <Field>
+            <FieldLabel className="min-h-10 flex items-center">
+              MJ transportado anualmente
+            </FieldLabel>
+            <FieldContent>
+              <Input value={data.domesticMjTransportedPerYear ?? 0} disabled />
+              <FieldError
+                errors={
+                  errors.domesticMjTransportedPerYear
+                    ? [{ message: errors.domesticMjTransportedPerYear }]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">MJ/ano</span>
+            </FieldContent>
+          </Field>
 
-            <Field>
-              <FieldLabel>Impacto da distribuição</FieldLabel>
-              <FieldContent>
-                <Input
-                  value={data.domesticImpactKgCO2EqPerMjTransported ?? 0}
-                  disabled
-                />
-                <FieldError
-                  errors={
-                    errors.domesticImpactKgCO2EqPerMjTransported
-                      ? [
-                          {
-                            message:
-                              errors.domesticImpactKgCO2EqPerMjTransported,
-                          },
-                        ]
-                      : []
-                  }
-                />
-                <span className="text-xs text-gray-500">
-                  kg CO2 eq. / MJ transportado
-                </span>
-              </FieldContent>
-            </Field>
-          </div>
+          <Field>
+            <FieldLabel className="min-h-10 flex items-center">
+              Impacto da distribuição
+            </FieldLabel>
+            <FieldContent>
+              <Input
+                value={data.domesticImpactKgCO2EqPerMjTransported ?? 0}
+                disabled
+              />
+              <FieldError
+                errors={
+                  errors.domesticImpactKgCO2EqPerMjTransported
+                    ? [
+                        {
+                          message: errors.domesticImpactKgCO2EqPerMjTransported,
+                        },
+                      ]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">
+                kg CO2 eq. / MJ transportado
+              </span>
+            </FieldContent>
+          </Field>
         </FieldGroup>
       </FieldSet>
 
@@ -558,104 +559,109 @@ export function DistributionPhaseSection({
             </FieldContent>
           </Field>
 
-          <FieldSeparator />
+          <FieldSeparator className="md:col-span-2" />
+        </FieldGroup>
 
-          {/* Outputs */}
-          <div className="flex gap-3">
-            <Field>
-              <FieldLabel>
-                Impacto da fase de distribuição no mercado externo
-              </FieldLabel>
-              <FieldContent>
-                <Input
-                  value={
-                    data.exportDistributionImpactFactoryToPortKgCO2EqPerYear ??
-                    0
-                  }
-                  disabled
-                />
-                <FieldError
-                  errors={
-                    errors.exportDistributionImpactFactoryToPortKgCO2EqPerYear
-                      ? [
-                          {
-                            message:
-                              errors.exportDistributionImpactFactoryToPortKgCO2EqPerYear,
-                          },
-                        ]
-                      : []
-                  }
-                />
-                <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
-              </FieldContent>
-            </Field>
+        {/* Outputs - 4 colunas lado a lado */}
+        <FieldGroup className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Field>
+            <FieldLabel className="min-h-10 flex items-center">
+              Impacto da fase de distribuição no mercado externo (Fábrica ao
+              porto)
+            </FieldLabel>
+            <FieldContent>
+              <Input
+                value={
+                  data.exportDistributionImpactFactoryToPortKgCO2EqPerYear ?? 0
+                }
+                disabled
+              />
+              <FieldError
+                errors={
+                  errors.exportDistributionImpactFactoryToPortKgCO2EqPerYear
+                    ? [
+                        {
+                          message:
+                            errors.exportDistributionImpactFactoryToPortKgCO2EqPerYear,
+                        },
+                      ]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
+            </FieldContent>
+          </Field>
 
-            <Field>
-              <FieldLabel>
-                Impacto da fase de distribuição no mercado externo
-              </FieldLabel>
-              <FieldContent>
-                <Input
-                  value={
-                    data.exportDistributionImpactPortToMarketKgCO2EqPerYear ?? 0
-                  }
-                  disabled
-                />
-                <FieldError
-                  errors={
-                    errors.exportDistributionImpactPortToMarketKgCO2EqPerYear
-                      ? [
-                          {
-                            message:
-                              errors.exportDistributionImpactPortToMarketKgCO2EqPerYear,
-                          },
-                        ]
-                      : []
-                  }
-                />
-                <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
-              </FieldContent>
-            </Field>
+          <Field>
+            <FieldLabel className="min-h-10 flex items-center">
+              Impacto da fase de distribuição no mercado externo (Porto ao
+              mercado)
+            </FieldLabel>
+            <FieldContent>
+              <Input
+                value={
+                  data.exportDistributionImpactPortToMarketKgCO2EqPerYear ?? 0
+                }
+                disabled
+              />
+              <FieldError
+                errors={
+                  errors.exportDistributionImpactPortToMarketKgCO2EqPerYear
+                    ? [
+                        {
+                          message:
+                            errors.exportDistributionImpactPortToMarketKgCO2EqPerYear,
+                        },
+                      ]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">kg CO2 eq./ano</span>
+            </FieldContent>
+          </Field>
 
-            <Field>
-              <FieldLabel>MJ exportado por ano</FieldLabel>
-              <FieldContent>
-                <Input value={data.exportMjTransportedPerYear ?? 0} disabled />
-                <FieldError
-                  errors={
-                    errors.exportMjTransportedPerYear
-                      ? [{ message: errors.exportMjTransportedPerYear }]
-                      : []
-                  }
-                />
-                <span className="text-xs text-gray-500">MJ/ano</span>
-              </FieldContent>
-            </Field>
+          <Field>
+            <FieldLabel className="min-h-10 flex items-center">
+              MJ exportado por ano
+            </FieldLabel>
+            <FieldContent>
+              <Input value={data.exportMjTransportedPerYear ?? 0} disabled />
+              <FieldError
+                errors={
+                  errors.exportMjTransportedPerYear
+                    ? [{ message: errors.exportMjTransportedPerYear }]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">MJ/ano</span>
+            </FieldContent>
+          </Field>
 
-            <Field>
-              <FieldLabel>Impacto da exportação</FieldLabel>
-              <FieldContent>
-                <Input
-                  value={data.exportImpactKgCO2EqPerMjTransported ?? 0}
-                  disabled
-                />
-                <FieldError
-                  errors={
-                    errors.exportImpactKgCO2EqPerMjTransported
-                      ? [
-                          {
-                            message: errors.exportImpactKgCO2EqPerMjTransported,
-                          },
-                        ]
-                      : []
-                  }
-                />
-                <span className="text-xs text-gray-500">
-                  kg CO2 eq. / MJ transportado
-                </span>
-              </FieldContent>
-            </Field>
-          </div>
+          <Field>
+            <FieldLabel className="min-h-10 flex items-center">
+              Impacto da exportação
+            </FieldLabel>
+            <FieldContent>
+              <Input
+                value={data.exportImpactKgCO2EqPerMjTransported ?? 0}
+                disabled
+              />
+              <FieldError
+                errors={
+                  errors.exportImpactKgCO2EqPerMjTransported
+                    ? [
+                        {
+                          message: errors.exportImpactKgCO2EqPerMjTransported,
+                        },
+                      ]
+                    : []
+                }
+              />
+              <span className="text-xs text-gray-500">
+                kg CO2 eq. / MJ transportado
+              </span>
+            </FieldContent>
+          </Field>
         </FieldGroup>
       </FieldSet>
     </section>

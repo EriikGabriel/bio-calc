@@ -170,6 +170,9 @@ export function CalculatorContent() {
                     onFieldChange={(name, value) => {
                       setIndustrialData((d) => ({ ...d, [name]: value }))
                     }}
+                    previousPhases={{
+                      agricultural: agriculturalData,
+                    }}
                   />
                 ),
                 onValidate: () => {

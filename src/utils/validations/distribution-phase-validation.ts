@@ -8,6 +8,9 @@ export function validateDistributionPhase(
 ): FieldErrors {
   const errors: FieldErrors = {}
 
+  // Debug: ver os valores do formulário
+  console.debug("Validando formulário de distribuição:", data)
+
   const add = (key: keyof DistributionPhaseFormData, msg: string) => {
     errors[key] = msg
   }
@@ -180,6 +183,9 @@ export function validateDistributionPhase(
       )
     }
   }
+
+  // Debug: mostrar erros encontrados
+  console.debug("Erros de validação:", errors)
 
   return errors
 }

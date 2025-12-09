@@ -9,18 +9,12 @@ export function validateAgriculturalPhase(
 ): AgriculturalPhaseFieldErrors {
   const errors: AgriculturalPhaseFieldErrors = {}
 
+  // Debug: ver os valores do formulário
+  console.debug("Validando formulário agrícola:", form)
+
   // Campos obrigatórios básicos
   if (isEmpty(form.biomassType)) {
     errors.biomassType = "Selecione o tipo de biomassa"
-  }
-
-  if (isEmpty(form.hasConsumptionInfo)) {
-    errors.hasConsumptionInfo = "Informe se possui o dado específico"
-  }
-
-  if (form.hasConsumptionInfo === "yes" && isEmpty(form.biomassInputSpecific)) {
-    errors.biomassInputSpecific =
-      "Informe a entrada específica ou selecione Não"
   }
 
   // Entrada de amido de milho é obrigatória
@@ -33,15 +27,20 @@ export function validateAgriculturalPhase(
     errors.biomassProductionState = "Selecione o estado da produção"
   }
 
-  // Etapa do ciclo de vida da madeira (se aplicável ao tipo de biomassa)
-  if (isEmpty(form.woodResidueLifecycleStage)) {
-    errors.woodResidueLifecycleStage =
-      "Selecione a etapa do ciclo de vida da madeira"
-  }
+  // Etapa do ciclo de vida da madeira (obrigatório apenas para resíduos de madeira)
+  const isWoodResidue = /^Resíduo de (Pinus|Eucaliptus)$/i.test(
+    form.biomassType
+  )
 
-  // Percentual de alocação é obrigatório
-  if (isEmpty(form.mutAllocationPercent)) {
-    errors.mutAllocationPercent = "Informe o percentual de alocação da biomassa"
+  if (isWoodResidue) {
+    // Para resíduos de madeira, deve ter uma etapa selecionada (não pode ser vazio ou "Não aplica")
+    if (
+      isEmpty(form.woodResidueLifecycleStage) ||
+      form.woodResidueLifecycleStage === "Não aplica"
+    ) {
+      errors.woodResidueLifecycleStage =
+        "Selecione a etapa do ciclo de vida da madeira"
+    }
   }
 
   // Distância de transporte é obrigatória
@@ -53,6 +52,9 @@ export function validateAgriculturalPhase(
   if (isEmpty(form.transportVehicleType)) {
     errors.transportVehicleType = "Selecione o tipo de veículo usado"
   }
+
+  // Debug: mostrar erros encontrados
+  console.debug("Erros de validação:", errors)
 
   return errors
 }

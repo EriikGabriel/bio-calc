@@ -15,7 +15,6 @@ export const COMPANY_INFO_INITIAL: CompanyFormData = {
 
 export const AGRICULTURAL_PHASE_INITIAL: AgriculturalPhaseFormData = {
   biomassType: "",
-  hasConsumptionInfo: "",
   biomassInputSpecific: "",
   biomassImpactFactor: "",
   biomassCalorificValue: "",
@@ -36,7 +35,6 @@ export const AGRICULTURAL_PHASE_INITIAL: AgriculturalPhaseFormData = {
 }
 
 export const INDUSTRIAL_PHASE_INITIAL = {
-  hasCogeneration: "",
   processedBiomassKgPerYear: "",
   biomassConsumedInCogenerationKgPerYear: "",
   gridMixMediumVoltage: "",

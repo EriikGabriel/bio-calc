@@ -178,14 +178,34 @@ export function FormWizard({
             >
               Voltar
             </Button>
-            <Button
-              type="button"
-              className="min-w-40 bg-soil-800"
-              onClick={handleNext}
-              disabled={isLoading}
-            >
-              {isLoading ? "Calculando..." : isLast ? "Calcular" : "Próximo"}
-            </Button>
+            <div className="flex gap-2">
+              {/* Botão temporário para pular fase (DEV ONLY) */}
+              {!isLast && process.env.NODE_ENV === "development" && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    console.warn(
+                      `⚠️ DEV: Pulando validação da etapa ${current}`
+                    )
+                    setValidationError(null)
+                    setCurrent((prev) => prev + 1)
+                  }}
+                  className="border-yellow-500 text-yellow-600 hover:bg-yellow-50"
+                  title="Modo desenvolvimento: pular sem validar"
+                >
+                  Skip (Dev)
+                </Button>
+              )}
+              <Button
+                type="button"
+                className="min-w-40 bg-soil-800"
+                onClick={handleNext}
+                disabled={isLoading}
+              >
+                {isLoading ? "Calculando..." : isLast ? "Calcular" : "Próximo"}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

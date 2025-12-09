@@ -14,7 +14,6 @@ function buildAgriculturalPayload(
 ): AgriculturalInput {
   return {
     biomassType: agricultural.biomassType,
-    hasConsumptionInfo: agricultural.hasConsumptionInfo || "",
     biomassInputSpecific: agricultural.biomassInputSpecific,
     biomassImpactFactor: agricultural.biomassImpactFactor,
     biomassCalorificValue: agricultural.biomassCalorificValue,
@@ -39,13 +38,17 @@ function buildAgriculturalPayload(
 function buildIndustrialPayload(
   industrial: IndustrialPhaseFormData
 ): IndustrialInput {
+  // Inferir co-geração: se o campo biomassConsumedInCogenerationKgPerYear estiver preenchido e > 0, então há co-geração
+  const hasCogenerationValue =
+    industrial.biomassConsumedInCogenerationKgPerYear &&
+    parseFloat(
+      industrial.biomassConsumedInCogenerationKgPerYear.replace(",", ".")
+    ) > 0
+      ? "yes"
+      : "no"
+
   return {
-    hasCogeneration:
-      industrial.hasCogeneration === "Sim"
-        ? "yes"
-        : industrial.hasCogeneration === "Não"
-        ? "no"
-        : "",
+    hasCogeneration: hasCogenerationValue,
     processedBiomassKgPerYear: industrial.processedBiomassKgPerYear,
     biomassConsumedInCogenerationKgPerYear:
       industrial.biomassConsumedInCogenerationKgPerYear,

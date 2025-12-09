@@ -7,10 +7,8 @@ export function validateIndustrialPhase(
 ): FieldErrors {
   const errors: FieldErrors = {}
 
-  // Required select
-  if (isEmpty(form.hasCogeneration)) {
-    errors.hasCogeneration = "Selecione se existe co-geração"
-  }
+  // Debug: ver os valores do formulário
+  console.debug("Validando formulário industrial:", form)
 
   // Required numeric: processed biomass
   if (isEmpty(form.processedBiomassKgPerYear)) {
@@ -85,6 +83,9 @@ export function validateIndustrialPhase(
       errors[f] = "Valor numérico inválido"
     }
   }
+
+  // Debug: mostrar erros encontrados
+  console.debug("Erros de validação:", errors)
 
   return errors
 }
