@@ -1,5 +1,5 @@
 import type React from "react"
-import { forwardRef, useState } from "react"
+import { forwardRef } from "react"
 import { Input } from "./input"
 
 /**
@@ -29,7 +29,7 @@ export const NumericInput = forwardRef<
     },
     ref
   ) => {
-    const [internalValue, setInternalValue] = useState(value || "")
+    // ...existing code...
 
     const formatNumber = (val: string): string => {
       // Remove tudo que não é número, vírgula ou sinal de menos
@@ -133,7 +133,6 @@ export const NumericInput = forwardRef<
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const formatted = formatNumber(e.target.value)
-      setInternalValue(formatted)
       e.target.value = formatted
       onChange?.(e)
     }
@@ -142,7 +141,6 @@ export const NumericInput = forwardRef<
       // Valida e aplica range ao perder o foco
       const validated = validateRange(e.target.value)
       if (validated !== e.target.value) {
-        setInternalValue(validated)
         e.target.value = validated
         // Criar um novo evento sintético para onChange
         const syntheticEvent = {

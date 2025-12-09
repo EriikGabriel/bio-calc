@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import html2canvas from "html2canvas"
-import jsPDF from "jspdf"
 import { Download, Loader2 } from "lucide-react"
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib"
 import { useState } from "react"
 
 type ExportPDFButtonProps = {
@@ -89,80 +89,91 @@ export function ExportPDFButton({
       // Remover o clone
       document.body.removeChild(clone)
 
-      // Criar o PDF
-      const imgWidth = 210 // A4 width in mm
-      const pageHeight = 297 // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-      let heightLeft = imgHeight
+      // Criar o PDF com pdf-lib
+      const imgData = canvas.toDataURL("image/png")
+      const pdfDoc = await PDFDocument.create()
+      const page = pdfDoc.addPage([595.28, 841.89]) // A4 size in points
+      const { width, height } = page.getSize()
 
-      const pdf = new jsPDF("p", "mm", "a4")
-      let position = 0
-
-      // Adicionar cabeçalho personalizado na primeira página
-      pdf.setFontSize(20)
-      pdf.setTextColor(94, 140, 97) // forest-600
-      pdf.text("Relatório de Análise do Ciclo de Vida", 105, 15, {
-        align: "center",
+      // Adicionar cabeçalho
+      const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+      const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica)
+      page.drawText("Relatório de Análise do Ciclo de Vida", {
+        x: width / 2 - 180,
+        y: height - 50,
+        size: 24,
+        font,
+        color: rgb(0.37, 0.55, 0.38),
       })
-
-      pdf.setFontSize(12)
-      pdf.setTextColor(59, 50, 44) // soil-800
-
+      let y = height - 80
       if (companyName) {
-        pdf.text(`Empresa: ${companyName}`, 105, 25, { align: "center" })
+        page.drawText(`Empresa: ${companyName}`, {
+          x: width / 2 - 100,
+          y,
+          size: 14,
+          font: fontRegular,
+          color: rgb(0.23, 0.2, 0.17),
+        })
+        y -= 20
       }
       if (biomassType) {
-        pdf.text(`Biomassa: ${biomassType}`, 105, 32, { align: "center" })
+        page.drawText(`Biomassa: ${biomassType}`, {
+          x: width / 2 - 100,
+          y,
+          size: 14,
+          font: fontRegular,
+          color: rgb(0.23, 0.2, 0.17),
+        })
+        y -= 20
       }
-
-      pdf.setFontSize(10)
-      pdf.setTextColor(100, 100, 100)
-      pdf.text(
+      page.drawText(
         `Gerado em: ${new Date().toLocaleDateString(
           "pt-BR"
         )} às ${new Date().toLocaleTimeString("pt-BR")}`,
-        105,
-        40,
-        { align: "center" }
+        {
+          x: width / 2 - 150,
+          y,
+          size: 10,
+          font: fontRegular,
+          color: rgb(0.4, 0.4, 0.4),
+        }
       )
 
-      // Linha separadora
-      pdf.setDrawColor(94, 140, 97)
-      pdf.setLineWidth(0.5)
-      pdf.line(20, 45, 190, 45)
+      // Adicionar imagem do conteúdo
+      const pngImage = await pdfDoc.embedPng(imgData)
+      const imgWidth = width - 40
+      const imgHeight = (pngImage.height * imgWidth) / pngImage.width
+      page.drawImage(pngImage, {
+        x: 20,
+        y: y - imgHeight - 30,
+        width: imgWidth,
+        height: imgHeight,
+      })
 
-      // Adicionar a imagem do conteúdo
-      const imgData = canvas.toDataURL("image/png")
-      position = 50 // Começar após o cabeçalho
-
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
-      heightLeft -= pageHeight - position
-
-      // Adicionar páginas adicionais se necessário
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight + 10 // Margem superior nas páginas seguintes
-        pdf.addPage()
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
-        heightLeft -= pageHeight
-      }
-
-      // Adicionar rodapé em todas as páginas
-      const totalPages = pdf.getNumberOfPages()
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i)
-        pdf.setFontSize(8)
-        pdf.setTextColor(150, 150, 150)
-        pdf.text(
-          `Bio-Calc - Análise de Ciclo de Vida de Biocombustíveis | Página ${i} de ${totalPages}`,
-          105,
-          290,
-          { align: "center" }
-        )
-      }
+      // Adicionar rodapé
+      page.drawText(
+        `Bio-Calc - Análise de Ciclo de Vida de Biocombustíveis | Página 1 de 1`,
+        {
+          x: width / 2 - 180,
+          y: 20,
+          size: 8,
+          font: fontRegular,
+          color: rgb(0.6, 0.6, 0.6),
+        }
+      )
 
       // Salvar o PDF
+      const pdfBytes = await pdfDoc.save()
+      const blob = new Blob([Uint8Array.from(pdfBytes)], {
+        type: "application/pdf",
+      })
+      const link = document.createElement("a")
       const timestamp = new Date().toISOString().split("T")[0]
-      pdf.save(`${fileName}-${timestamp}.pdf`)
+      link.href = URL.createObjectURL(blob)
+      link.download = `${fileName}-${timestamp}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     } catch (error) {
       console.error("Erro ao gerar PDF:", error)
       alert("Erro ao gerar o PDF. Tente novamente.")

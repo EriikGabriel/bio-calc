@@ -9,12 +9,10 @@ import { useState } from "react"
 
 export default function HomePage() {
   const [currentTab, setCurrentTab] = useState("overview")
-  const [calculationResult, setCalculationResult] =
-    useState<CalculateResponse | null>(null)
+  // ...existing code...
 
   function handleResultsReady(result: CalculateResponse | null) {
     if (result?.ok) {
-      setCalculationResult(result)
       setCurrentTab("results")
     }
   }

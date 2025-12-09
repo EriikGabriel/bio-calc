@@ -1,9 +1,9 @@
 import type { CalculateResponse } from "@/types/api"
 import { toNumber } from "@/utils/number"
-import { readFileSync } from "fs"
+// ...existing code...
 import { NextResponse } from "next/server"
 import { join } from "path"
-import * as XLSX from "xlsx"
+// ...existing code...
 
 // Contract types (kept minimal to decouple from UI types)
 // Import request types from shared API types
@@ -34,7 +34,7 @@ const DEFAULT_FUEL_CO2_PER_UNIT = {
   woodKg: 0.0, // often biogenic; treat as 0 for placeholder
 }
 
-function calcAgricultural(input: AgriculturalInput, workbook: XLSX.WorkBook) {
+function calcAgricultural(input: AgriculturalInput) {
   console.log(input)
 
   const biomassSpecific = toNumber(input.biomassInputSpecific, 1) // kg/MJ
@@ -87,7 +87,7 @@ function calcAgricultural(input: AgriculturalInput, workbook: XLSX.WorkBook) {
   }
 }
 
-function calcIndustrial(input: IndustrialInput, workbook: XLSX.WorkBook) {
+function calcIndustrial(input: IndustrialInput) {
   const processedBiomassKg = toNumber(input.processedBiomassKgPerYear, 0)
   const biomassMJ = processedBiomassKg * DEFAULT_BIOMASS_CALORIFIC_MJ_PER_KG
 
@@ -142,7 +142,7 @@ function calcIndustrial(input: IndustrialInput, workbook: XLSX.WorkBook) {
   }
 }
 
-function calcDistribution(input: DistributionInput, workbook: XLSX.WorkBook) {
+function calcDistribution(input: DistributionInput) {
   const domQtyTon = toNumber(input.domesticBiomassQuantityTon, 0)
   const domDistKm = toNumber(input.domesticTransportDistanceKm, 0)
   const domRoadPct = toNumber(input.domesticRoadPercent, 100) / 100
@@ -202,18 +202,18 @@ export async function POST(req: Request) {
     const filePath = join(process.cwd(), "src/backend/BioCalc - Planilha.xlsx")
     let resultFromSheet: unknown = null
     try {
-      const fileBuffer = readFileSync(filePath)
-      const workbook = XLSX.read(fileBuffer, { type: "buffer" })
+      // ...existing code...
+      // ...existing code...
 
       const computed = {
         agricultural: body.agricultural
-          ? calcAgricultural(body.agricultural, workbook)
+          ? calcAgricultural(body.agricultural)
           : undefined,
         industrial: body.industrial
-          ? calcIndustrial(body.industrial, workbook)
+          ? calcIndustrial(body.industrial)
           : undefined,
         distribution: body.distribution
-          ? calcDistribution(body.distribution, workbook)
+          ? calcDistribution(body.distribution)
           : undefined,
       }
 

@@ -263,19 +263,9 @@ export function ResultsSection({
 
   // Dados para gráfico radial - Score de sustentabilidade
   const sustainabilityScore = Math.max(0, Math.min(100, reductionPercent))
-  const radialData = [
-    {
-      name: "Eficiência",
-      value: sustainabilityScore,
-      fill: "#5e8c61",
-    },
-  ]
+  // ...existing code...
 
-  const radialConfig: ChartConfig = {
-    value: {
-      label: "Score (%)",
-    },
-  }
+  // ...existing code...
 
   // Dados para gráfico de linha - Distribuição de impacto por categoria
   const lineData = [
@@ -296,16 +286,7 @@ export function ResultsSection({
     },
   ]
 
-  const lineConfig: ChartConfig = {
-    valor: {
-      label: "Impacto (kg CO₂eq/MJ)",
-      color: "#5e8c61",
-    },
-    percentual: {
-      label: "Percentual (%)",
-      color: "#72bda3",
-    },
-  }
+  // ...existing code...
 
   // Cálculo de nota de eficiência energético-ambiental
   const energyEfficiencyScore = Math.abs(reductionPercent)
