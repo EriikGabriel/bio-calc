@@ -13,9 +13,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { saveCalculationHistory } from "@/services/history"
 import { CalculateResponse } from "@/types/api"
 import { formatNumber } from "@/utils/format"
 import { Award, Factory, Leaf, TrendingDown, Truck } from "lucide-react"
+import { useEffect } from "react"
 import {
   Bar,
   BarChart,
@@ -38,6 +40,38 @@ export function ResultsSection({
   companyName,
   biomassType,
 }: ResultsSectionProps) {
+  useEffect(() => {
+    if (result && result.ok && typeof window !== "undefined") {
+      const userStr = localStorage.getItem("user")
+      if (userStr && result.computed) {
+        const user = JSON.parse(userStr)
+        saveCalculationHistory({
+          userId: user.id,
+          steps: undefined, // Não existe steps em result
+          results: result.computed,
+          charts: {
+            pieData,
+            barConfig,
+            areaConfig,
+            pieConfig,
+            agricultureDetailData,
+            industrialDetailData,
+            reductionData,
+            stackedData,
+            lineData,
+            comparisonConfig,
+            fossilComparison,
+            reductionConfig,
+            stackedConfig,
+            sustainabilityScore,
+          },
+          title: companyName || undefined,
+          description: biomassType || undefined,
+        })
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result])
   if (!result || !result.ok) {
     return (
       <div className="p-8 text-center text-soil-600">

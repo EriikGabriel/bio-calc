@@ -1,4 +1,5 @@
 import { FormWizard } from "@/components/form-wizard"
+import { saveCalculationHistory } from "@/services/history"
 import type { CalculateResponse } from "@/types/api"
 import type { FieldErrors } from "@/types/forms"
 import { buildFullPayload, buildPayloadForStep } from "@/utils/payload-builders"
@@ -85,6 +86,26 @@ export function CalculatorContent({
     ) {
       console.log("Cálculo finalizado com sucesso!", result)
       setCalculationResult(result)
+      // Salvar no histórico do Supabase
+      if (typeof window !== "undefined" && result && result.ok) {
+        const userStr = localStorage.getItem("user")
+        if (userStr) {
+          const user = JSON.parse(userStr)
+          const steps = buildFullPayload(
+            agriculturalData,
+            industrialData,
+            distributionData
+          )
+          await saveCalculationHistory({
+            userId: user.id,
+            steps,
+            results: result.computed,
+            charts: undefined,
+            title: companyInfo?.companyName || undefined,
+            description: agriculturalData?.biomassType || undefined,
+          })
+        }
+      }
       // Notificar o componente pai para mudar de aba
       onResultsReady?.(result)
     }

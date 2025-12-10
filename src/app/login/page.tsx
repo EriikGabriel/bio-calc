@@ -3,10 +3,20 @@
 import { LoginForm } from "@/components/login-form"
 import { SignupForm } from "@/components/signup-form"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
-import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function LoginPage() {
   const [formType, setFormType] = useState<"login" | "signup">("login")
+  const router = useRouter()
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userStr = localStorage.getItem("user")
+      if (userStr) {
+        router.replace("/")
+      }
+    }
+  }, [router])
 
   return (
     <main className="bg-herb-300 text-white h-dvh w-dvw flex justify-center items-center relative overflow-hidden">
