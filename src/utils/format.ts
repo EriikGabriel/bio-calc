@@ -37,6 +37,8 @@ export function formatPhoneBR(value: string): string {
   return out
 }
 
-export function formatNumber(value: number, decimals: number = 2): string {
-  return value.toFixed(decimals)
+export function formatNumber(value: any, decimals: number = 2): string {
+  const num = typeof value === "number" ? value : Number(value)
+  if (isNaN(num) || num === null || num === undefined) return "0"
+  return num.toFixed(decimals)
 }
